@@ -92,7 +92,7 @@ This command calls the LKL function {\bf lkl_add_route} which uses netlink socke
 \subsection{Device tests}
 \label{sub-sec:router-tests}
 
-Device tests
+Router tests
 
 \section{NAT}
 \label{sub-sec:nat-impl}
@@ -172,11 +172,7 @@ filter -L [chain]
 
 \subsection{Device tests}
 \label{sub-sec:nat-tests}
-Linux kernel support(iptables)
-
-My work
-
-Device tests
+NAT tests
 
 \section{Hub}
 \label{sec:hub:impl}
@@ -190,17 +186,59 @@ It was implemented as a user space, non-LKL program. It uses BSD sockets for com
 \fig[scale=0.5]{src/img/hub.pdf}{img:hub}{Hub}
 \subsection{Device tests}
 \label{sub-sec:router-tests}
-About hub implementation
+HUB tests
 
-\section{Hypervisor}
-\label{sec:hypervisor}
+\section{GUI}
+\label{sec:gui}
+
 gtk 
 cairo
 
 \section{Configuration file and console}
 \label{sec:config}
-In order to avoid repetitive actions such as defining interfaces for a device every time it is used, each of the LKL devices has a configuration file containing important information such as: device name, device type, interface definition (interface name, IPv4 address, etc ),etc. When a device is started it reads its configuration file if one was specified for it. The configuration file is parsed using Flex. We have definded some keyword for writing a configuration file such as: hostname, ipaddress, interface, type, mac, gateway. Some of these heywords can be followed by particular values(for example valid type values are router, hub, switch). An example of a configuration file is given in \ref{appendix:config}.
 
-Console::a complete list of available commands for the devices is listed in % \ref{appendix:commands}  
-Flex
-LibReadline
+\subsubsection{Configuration file}
+\label{subsec:config-file}
+In order to avoid repetitive actions such as defining interfaces for a device every time it is used, each of the LKL devices has a configuration file containing important information such as: device name, device type, interface definition (interface name, IPv4 address, etc ),etc. When a device is started it reads its configuration file if one was specified for it. The configuration file is parsed using Flex. We have definded some keywords for writing a configuration file such as: hostname, ipaddress, interface, type, mac, gateway. Some of these heywords can be followed by particular values(for example valid type values are router, hub, switch). An example of a configuration file is given in \appref{ch:config-file}.
+
+When started, a device can be passed its configuration file -if it has one- so that it is appropriately configured.
+For routers and switches, the configuration file must contain the device name, the IPv4 address of the system where the device is running and a port on which the device is listening so that the hypervisor can communicate with the devices, an example is shown below:
+\lstset{language=zsh,caption=Fields of Configuration File,label=lst:config-file}
+\begin{lstlisting}
+hostname London;
+ipaddress 192.168.1.1;
+port 60001;
+\end{lstlisting}
+Following these specification is a list of the device interfaces, for each interface one must specify the interface name, MAC address, IPv4 address, the name of the connecting hub, the gateway address. After these, other device-specific commands may follow such as definition of routes or NAT/firewall rules.
+
+The configuration file for the hypervisor is different from that of the other devices. It starts with the keyword \textbf{hypervisor} and it must contain a list of all the devices, a new device is represented by the keyword \textbf{device}. For each of the devices its type must be specified(hub,router or switch), its name and the position when shown using the GUI(a x and a y coordinate). For a hub the port it is listening for connections is to be specified whereas for routers and switches the path to the configuration file (if the device has a configuration file) is needed.    
+\lstset{language=zsh,caption=Listing a Hub in hypervisor configuration file,label=lst:hy-config-file}
+\begin{lstlisting}
+device {
+		type hub;
+		hostname hub1;
+		port 50001;
+		posx 350;
+		posy 400;
+	}
+\end{lstlisting}
+\lstset{language=zsh,caption=Listing a Router/Switch in hypervisor configuration file,label=lst:hy-config-file}
+\begin{lstlisting}
+device {
+		type router/switch;
+		hostname R2;
+		config tests/test.router/3routers/router.R2;
+		posx 200;
+		posy 500;
+	}
+\end{lstlisting}
+When run, the hypervisor reads its configuration file and starts and configures all the devices using the configuration file.
+The hypervisor stores internally the devices as lists -a list for each type of device. 
+The use of a semicolon at the end of line is optional.  
+\subsubsection*{Console}
+\label{subsubsec:impl-console}
+To go even further and make the application easier to use and more user-friendly we developed a CLI for configuring devices as well as creating new ones. The command line interface was build using the Readline library\footnote{\url{http://tiswww.case.edu/php/chet/readline/rltop.html}} which provides a set of functions for creating a command line interface. At present the CLI supports command histrory as well as autocompletion. 
+
+The command is obtained using the \textit{readline()} function, which takes as an argument a string value representing the prompt that is shown at the beginning of line. We chose to use the name of the device followed by ">" as a prompt. A command can be added to the history using the \textit{add_history()} libreadline function which takes as an argument the command that is to be added to the history.
+When then TAB key is pressed all the possible commands are listed. To implement autocomplete the least required is that the \textit{rl_completion_entry_function} variable takes the value of the function that checks which of the available commands are still valid for the current command. This function iterates through all the available commands and returns the ones that match the current command. Each of the devices has its own list of available commands and so, for each of them there needs to be created a structure containing the available commands which is passed to the function responsible for autocumplete. If there is nothing typed when TAB is pressed then the list of all the available commands is shown, each of them being followed by a short description whereas if some part of the command is typed then only the matching commands will be printed, with no description.
+A complete list of the available commands for all of the devices simulated using LKL is given is \appref{ch:commands}

@@ -224,6 +224,10 @@
 \newcommand{\labelindexref}[2]{\hyperref[#2]{#1~\ref*{#2}}}
 \newcommand{\labelref}[2]{\hyperref[#2]{#1}}
 
+% commands for creating appendix and figure references
+\newcommand{\appref}[1]{\hyperref[#1]{Appendix~\ref{#1}}}
+\newcommand{\figref}[1]{\hyperref[#1]{Figure~\ref{#1}}}
+
 % command for inserting labeled figures
 % Usage: \fig{file}{label}{caption}
 %   TODO: references should point to the top of the image
