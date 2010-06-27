@@ -227,6 +227,7 @@
 % commands for creating appendix and figure references
 \newcommand{\appref}[1]{\hyperref[#1]{Appendix~\ref{#1}}}
 \newcommand{\figref}[1]{\hyperref[#1]{Figure~\ref{#1}}}
+\newcommand{\chapref}[1]{\hyperref[#1]{Chapter~\ref{#1}}}
 
 % command for inserting labeled figures
 % Usage: \fig{file}{label}{caption}
