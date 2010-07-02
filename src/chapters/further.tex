@@ -3,17 +3,19 @@
 In order for this project to be easier to use and to serve its purpose better the following must be considered for further development.
 \subsubsection{Scenario replay}
 \label{sec:scenario-replay}
-Having the hub as a device connector makes this task not too hard to implement. Such a feature can be useful both for educational purposes as well as for research ones.
+Such a feature can be useful both for educational purposes as well as for research ones. Having the hub as a device connector makes this task not too hard to implement because all packets that flow in a LKL topology pass through a hub. Thus the hub can save the packets it receives and forward them at a later time. At the same time, packet investigation or even packet changing can be some by the hub or these tasks could be done by some other application to which the hub would pass the packets it receives. At present the hub prints the header of ARP and IPv4 packets it receives.
 \subsubsection{Migration to other OS}
 \label{sec:migration-os}
-
+One of the purposes of Linux kernel library is to be used in many different environments. In the current version of \project the network driver is implemented only for Linux, so in order to be able to run LKL-net programs on a system running an OS different from Linux the network driver should be implemented for other enviromnents.
 \subsubsection{Physical layer simulation}
 \label{sec:physica-sim}
 
 \subsubsection{Configuration of a routing protocol}
 \label{sec:routing-prot}
-Being able to configurate a routing protocol would make simulating complex topologies easier and, at the same time, testing different scenarios would require less time to configure. 
+Configuring static routes can be a time-consuming task for complex, frequently changing topologies so that being able to configurate a routing protocol would make simulating complex topologies easier and, at the same time, testing different scenarios would require less time to configure. The time gained from dinamically added routes in the routing table could then be used for other more useful purposes.
+
+\todo{how to implement rip or other routing prot} 
 
 \subsubsection{Communication between multiple hypervisors}
 \label{sec:hypervisor-comm}
-At present the hypervisor is responsible for starting all the devices, commanding them to write changes to their configuration files and listening for requests for name-solving. In the future we are considering to add the facility to comunicate between different hypervisors that might or might not be located on different physical systems. 
+At present the hypervisor is responsible for starting all the devices, commanding them to write changes to their configuration files and listening for requests from devices. In the future we are considering to add the facility to comunicate between different hypervisors that might or might not be located on different physical systems. 

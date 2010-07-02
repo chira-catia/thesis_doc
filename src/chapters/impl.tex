@@ -89,7 +89,8 @@ add <network_address/netmask> <interface_name>
 \end{lstlisting}  
 This command calls the LKL function {\bf lkl_add_route} which uses netlink sockets for adding the new route.
 
-\todo{talk about sys_ioctl}
+%\todo{talk about sys_ioctl}
+For putting router interfaces up or down and for listing the active interfaces of a router we have used \textit{ioctl} system call.
 
 \subsection{Device tests}
 \label{sub-sec:router-tests}
@@ -270,7 +271,9 @@ The use of a semicolon at the end of line is optional.
 To go even further and make the application easier to use and more user-friendly we developed a CLI for configuring devices as well as creating new ones. The command line interface was build using the Readline library\footnote{\url{http://tiswww.case.edu/php/chet/readline/rltop.html}} which provides a set of functions for creating a command line interface. At present the CLI supports command histrory as well as autocompletion. 
 
 The command is obtained using the \textit{readline()} function, which takes as an argument a string value representing the prompt that is shown at the beginning of line. We chose to use the name of the device followed by ">" as a prompt. A command can be added to the history using the \textit{add_history()} libreadline function which takes as an argument the command that is to be added to the history.
+
 When then TAB key is pressed all the possible commands are listed. To implement autocomplete the least required is that the \textit{rl_completion_entry_function} variable takes the value of the function that checks which of the available commands are still valid for the current command. This function iterates through all the available commands and returns the ones that match the current command. Each of the devices has its own list of available commands and so, for each of them there needs to be created a structure containing the available commands which is passed to the function responsible for autocumplete. If there is nothing typed when TAB is pressed then the list of all the available commands is shown, each of them being followed by a short description whereas if some part of the command is typed then only the matching commands will be printed, with no description.
+
 A complete list of the available commands for all of the devices simulated using LKL is given is \appref{ch:commands}
 
 \section{GUI}
@@ -280,6 +283,25 @@ Having configuration files and a means to start all the devices (using the hyper
 In order to make LKL-Net more intuitive we built a GUI using GTK library\footnote{\url{http://www.gtk.org/}}. Using the GUI, the list of devices is available and for each device the configuration file for it can be seen, the topology can be visualised, modified or saved. It is also possible to open a new topology. When the devices are started the console associated to each of them starts as well and new commands can be typed in. The GUI allows some configuration to be made concerning the devices such as adding or removing interfaces and creating links between devices.
 
 The topology is a new GTK widget onto which devices can be added and links be created. Drawing in this widget was possible using Cairo library.
-\fig[scale=0.5]{src/img/hypergui-1.pdf}{img:hypergui}{\project GUI}
+%\fig[scale=0.5]{src/img/hypergui-1.pdf}{img:hypergui}{\project GUI}
 
-\todo{communication hypergui-devices}
+The GUI consists of three areas:
+\begin{enumerate}
+\item ToolBar section
+\fig[scale=0.5]{src/img/toolbar.png}{img:toolbar}{ToolBar}
+
+This area is situated at the top of the GUI, from left to right the buttons are used for: boot devices, load topology, save topology, create router, create switch, create hub, create bridge, add link, remove link, delete device, no operation.
+\item Topology area
+\fig[scale=0.5]{src/img/topology-area.png}{img:top-area}{Topology Area}
+
+This is the largest area of the GUI, here the topology is visible and changes can be done to it: devices can be added or deleted, new links between devices can be created, router or switch interfaces can be added or deleted by double ckicking on the device and entering required information.
+\item Topology Devices list
+\fig[scale=0.5]{src/img/gui-dev-list.png}{img:gui-dev-list}{Device List}
+
+Situated to the right of the GUI, in this area the devices from the topology are listed; a double-click on a device name will open its configuration file (if the device has one).
+\end{enumerate}
+
+When some modification is made to a device from the GUI, the device is sent a command so the modification can take effect. Each device listens on a port for commands from the hypervisor. The port on which a device waits for commands from the hypervisor is specified in the device's configuration file.
+
+At the same time, a device may ask the hypervisor for some information (such as the port for a hub), these requests are sent to the hypervisor on port 7200 on which the hypervisor waits for requests from devices.
+%\todo{communication hypergui-devices}

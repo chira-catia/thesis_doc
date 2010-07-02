@@ -94,6 +94,8 @@
 % restart numbering footnotes on every page
 \usepackage{perpage}
 \MakePerPage{footnote}
+%one and a half spacing between lines
+%\onehalfspacing
 
 % custom variables for altering front page content
 

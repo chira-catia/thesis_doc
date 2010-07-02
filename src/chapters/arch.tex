@@ -59,8 +59,8 @@ The way our interface driver works is presented in \figref{img:eth-driver}
 \label{sec:lkl-net}
 \textbf{\project} is a LKL application that uses the  TCP/IP stack from the Linux kernel in order to implement a series of network devices such as: hub, host, switch, router, nat, firewall. Some of these devices are implemented using already implemented functions from the Linux kernel network subsystem: 
 \begin{itemize}
-\item The \textbf{switch} is implemented using the 
-\item The \textbf{router} is implemented using the \textit{netlink interface}
+\item The \textbf{switch} is implemented using ioctl and bridging subsystem. 
+\item The \textbf{router} is implemented using \textit{netlink interface} and routing subsystem.
 \item The \textbf{nat} and \textbf{firewall} are implemented using ip_tables. 
 \end{itemize} 
 Besides these LKL-net devices, two additional devices were needed (non-LKL applications) for a proper functionality: a hub and a bridge device.
@@ -129,7 +129,8 @@ This device is responsible for connecting two different physical mediums. In LKL
 The hypervisor is a non-LKL application used to build a topology. It is also used to give devices information about other devices (e.g. the port on which a hub-given by its name- runs) or to send commands to the devices. The hypervisor can be run using the CLI or the GUI.
 
 A image showing how the hypervisor works is \figref{img:hypervisor}. 
-\fig[scale=0.5]{src/img/arch.png}{img:hypervisor}{LKL-net Hypervisor}
+%\fig[scale=0.5]{src/img/arch.png}{img:hypervisor}{LKL-net Hypervisor}
+\fig[scale=0.5]{src/img/hypervisor}{img:hypervisor}{LKL-net Hypervisor}
 \section{Devices and features}
 \begin{center}
   \begin{table}[htb]
