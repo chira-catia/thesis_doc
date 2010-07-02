@@ -90,10 +90,45 @@ add <network_address/netmask> <interface_name>
 This command calls the LKL function {\bf lkl_add_route} which uses netlink sockets for adding the new route.
 
 \todo{talk about sys_ioctl}
+
 \subsection{Device tests}
 \label{sub-sec:router-tests}
 
-Router tests
+We built a small topology consisting of three routers that will help us tests the functions of the router. After the devices are started, static routes will be added to the routers. Two LKL applications will then be connected to routers R2 and R3 to see if there is conectivity between them. The applications are instances of a simple LKL test application used to create hosts; in order to configure a host the following must be specified: 
+\begin{lstlisting}
+  -a, --address=IPv4 address -IPv4 address for the lkl interface
+  -n, --netmask-length=int   -IPv4 netmask length for the lkl interface
+  -d, --default=IPv4 address -IPv4 default route
+  -g, --gateway=IPv4 address -IPv4 gateway for lkl-the address of the system where the hub is located
+  -i, --interface=string     -LKL interface name
+  -m, --mac=mac address      -MAC address for the lkl interface
+\end{lstlisting}
+
+\begin{comment}
+  -l, --lkl                  -means that this application uses LKL
+  -p, --port=int             Port
+  -r, --role=string          server/client
+  -t, --to=Destination IPv4 address
+                             IPv4 destination
+\end{comment}
+\fig[scale=0.5]{src/img/routers.png}{img:routers}{Router test}
+
+\begin{center}
+  \begin{table}[htb]
+  \begin{center}
+  \begin{tabular}{| l | l | l | l | l |}
+    \hline
+      Hostname & Interface & IP & Interface & IP \\ \hline
+      R1 & eth0 & 199.9.9.9/24 & eth1 & 8.8.8.8/24 \\ \hline
+      R2 & eth0 & 199.9.9.10/24 & eth1 & 10.10.10.10/24\\ \hline
+      R3 & eth0 & 8.8.8.9/24 & eth1 & 168.16.21.9/24 \\
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{LKL-net devices}
+  \label{table:tdevices}
+  \end{table}
+\end{center}
 
 \section{NAT}
 \label{sub-sec:nat-impl}
@@ -116,9 +151,9 @@ Parts of the kernel can register to listen to the different hooks for each proto
 A series of tables are defined in the linux kernel each of which is used for specific purposes. For each of these tables there are some predefined chains. When a packet traverses one of these chains, a search is made in the corresponding table(s) for finding matching rules and applying specified targets. Users can create new chains through iptables tool and add them to tables.
 Linux kernel tables and their predefined chains are:       
 \begin{itemize}
-\item {\bf Nat} is used for Network Address Translation, pakets from the same stream traverse this table only once. Valid chains for this table are PREROUTING, POSTROUTING and OUTPUT. Due to the fact that only the first packet from one stream hits this table, it is not recommended to do any filtering using nat table.
-\item {\bf Filter} should be used only for filtering purposes. Filtering rules may require to DROP, ACCEPT, LOG or REJECT packets for valid chains such as FORWARD, INPUT and OUTPUT.
-\item {\bf Mangle} is used mainly for mangling packets; modifications may be made in packet header as well as in their data. The table consists of five built in chains, the PREROUTING, POSTROUTING, OUTPUT, INPUT and FORWARD chains. This table cannot be used for NAT purposes -DNAT, SNAT or MASQUERADE- having nat table to deal with such aspects. 
+\item {\bf nat} is used for Network Address Translation, pakets from the same stream traverse this table only once. Valid chains for this table are PREROUTING, POSTROUTING and OUTPUT. Due to the fact that only the first packet from one stream hits this table, it is not recommended to do any filtering using nat table.
+\item {\bf filter} should be used only for filtering purposes. Filtering rules may require to DROP, ACCEPT, LOG or REJECT packets for valid chains such as FORWARD, INPUT and OUTPUT.
+\item {\bf mangle} is used mainly for mangling packets; modifications may be made in packet header as well as in their data. The table consists of five built in chains, the PREROUTING, POSTROUTING, OUTPUT, INPUT and FORWARD chains. This table cannot be used for NAT purposes -DNAT, SNAT or MASQUERADE- having nat table to deal with such aspects. 
 \end{itemize}
 
 A rule from a kernel table is represented by the ipt_entry structure. The ip field of this structure having struct ipt_ip type  contains information being used to match a rule such as source or destination ip and netmask, incoming or outgoing interface name and netmask and protocol. The variable-length elems(of unsigned char type) field contains both the match and target sections for a rule. The target_offset(u_int16_t) field represents the offset in the ipt_entry structure at which the targets can be found. The next_offset field(u_int16_t) specifies the offset at which the next ipt_entry can be found.   
@@ -246,3 +281,5 @@ In order to make LKL-Net more intuitive we built a GUI using GTK library\footnot
 
 The topology is a new GTK widget onto which devices can be added and links be created. Drawing in this widget was possible using Cairo library.
 \fig[scale=0.5]{src/img/hypergui-1.pdf}{img:hypergui}{\project GUI}
+
+\todo{communication hypergui-devices}

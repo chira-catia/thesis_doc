@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="400"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.47 r22583"
+   sodipodi:docname="routing-process.svg">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lend"
+       style="overflow:visible;">
+      <path
+         id="path3604"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none;"
+         transform="scale(0.8) rotate(180) translate(12.5,0)" />
+    </marker>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective10" />
+    <inkscape:perspective
+       id="perspective4461"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4483"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4520"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend-8"
+       style="overflow:visible">
+      <path
+         id="path3604-2"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <inkscape:perspective
+       id="perspective4565"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend-86"
+       style="overflow:visible">
+      <path
+         id="path3604-7"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <inkscape:perspective
+       id="perspective4602"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4643"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend-2"
+       style="overflow:visible">
+      <path
+         id="path3604-1"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <inkscape:perspective
+       id="perspective4680"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="667.2992"
+     inkscape:cy="393.9044"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1280"
+     inkscape:window-height="725"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#d3f62b;fill-opacity:0.45777779;stroke:#000000;stroke-width:1.55544567;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect2816"
+       width="142.45125"
+       height="142.45125"
+       x="176.53899"
+       y="-147.99632"
+       transform="matrix(0.90470201,0.42604493,-0.90470201,0.42604493,0,0)" />
+    <text
+       xml:space="preserve"
+       style="font-size:31.86929321px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="176.27229"
+       y="80.271553"
+       id="text3590"
+       transform="scale(1.144161,0.87400287)"><tspan
+         sodipodi:role="line"
+         id="tspan3592"
+         x="176.27229"
+         y="80.271553"
+         style="font-size:21.51177216px">Packet for local </tspan><tspan
+         sodipodi:role="line"
+         x="176.27229"
+         y="107.16126"
+         style="font-size:21.51177216px"
+         id="tspan3594">      system</tspan></text>
+    <g
+       id="g2991"
+       transform="translate(5.7142857,-97.142857)">
+      <path
+         id="path3596"
+         d="m 66.670068,172.51932 87.883272,-2.02031"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)" />
+      <text
+         transform="scale(1.1125415,0.89884288)"
+         id="text4046"
+         y="178.19946"
+         x="6.683991"
+         style="font-size:32.33987808px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="178.19946"
+           x="6.683991"
+           id="tspan4048"
+           sodipodi:role="line">Incoming </tspan><tspan
+           id="tspan4050"
+           y="218.62431"
+           x="6.683991"
+           sodipodi:role="line">packet</tspan></text>
+    </g>
+    <g
+       id="g4552"
+       transform="translate(7.7345908,-95.122552)">
+      <path
+         id="path4052"
+         d="m 415.15858,168.63049 76.77181,-0.30786"
+         style="fill:none;stroke:#000000;stroke-width:1.02558649px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)" />
+      <text
+         transform="scale(1.0524331,0.95017917)"
+         id="text4424"
+         y="168.9847"
+         x="397.57593"
+         style="font-size:31.02413559px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="168.9847"
+           x="397.57593"
+           id="tspan4426"
+           sodipodi:role="line">yes</tspan></text>
+    </g>
+    <g
+       id="g4630"
+       transform="translate(5.7142857,-97.142857)">
+      <path
+         id="path4238"
+         d="m 286.88332,231.10816 0,40.40611"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)" />
+      <text
+         transform="scale(1.1655333,0.85797635)"
+         id="text4428"
+         y="294.26315"
+         x="254.80597"
+         style="font-size:34.31905365px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="294.26315"
+           x="254.80597"
+           id="tspan4430"
+           sodipodi:role="line">no</tspan></text>
+    </g>
+    <g
+       id="g4448"
+       transform="translate(9.7548959,-99.163163)">
+      <g
+         id="g2986">
+        <rect
+           style="fill:#63f62b;fill-opacity:0.45777779;stroke:#00c700;stroke-opacity:1"
+           id="rect4446"
+           width="235.36554"
+           height="35.355339"
+           x="493.9646"
+           y="153.32642" />
+        <text
+           xml:space="preserve"
+           style="font-size:31.56004143px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+           x="498.40689"
+           y="180.64091"
+           id="text4432"
+           transform="scale(0.99716784,1.0028402)"><tspan
+             id="tspan4732"
+             sodipodi:role="line"
+             x="498.40689"
+             y="180.64091"
+             style="stroke:none">Deliver packet</tspan></text>
+      </g>
+    </g>
+    <rect
+       style="fill:#d3f62b;fill-opacity:0.45777779;stroke:#000000;stroke-width:1.55544567;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect2816-7"
+       width="142.45125"
+       height="142.45125"
+       x="370.36823"
+       y="45.832912"
+       transform="matrix(0.90470201,0.42604493,-0.90470201,0.42604493,0,0)" />
+    <text
+       xml:space="preserve"
+       style="font-size:31.86929321px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="177.33305"
+       y="268.28006"
+       id="text3590-8"
+       transform="scale(1.144161,0.87400287)"><tspan
+         sodipodi:role="line"
+         x="177.33305"
+         y="268.28006"
+         style="font-size:21.51177216px"
+         id="tspan3594-8">Found route in </tspan><tspan
+         sodipodi:role="line"
+         x="177.33305"
+         y="295.16977"
+         style="font-size:21.51177216px"
+         id="tspan4505">  routing table</tspan></text>
+    <g
+       transform="translate(7.7485987,69.383803)"
+       id="g4552-7">
+      <path
+         id="path4052-4"
+         d="m 415.15858,168.63049 76.77181,-0.30786"
+         style="fill:none;stroke:#000000;stroke-width:1.02558649px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)" />
+      <text
+         transform="scale(1.0524331,0.95017917)"
+         id="text4424-9"
+         y="168.9847"
+         x="397.57593"
+         style="font-size:31.02413559px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="168.9847"
+           x="397.57593"
+           id="tspan4426-0"
+           sodipodi:role="line">yes</tspan></text>
+    </g>
+    <g
+       id="g4448-0"
+       transform="translate(10.259969,64.986623)">
+      <g
+         id="g4625"
+         transform="translate(-4.0406102,2.0203051)">
+        <rect
+           style="fill:#63f62b;fill-opacity:0.45777779;stroke:#00c700;stroke-width:1.02088857;stroke-opacity:1"
+           id="rect4446-1"
+           width="245.44618"
+           height="35.33445"
+           x="493.97504"
+           y="153.33685" />
+        <text
+           xml:space="preserve"
+           style="font-size:31.56004143px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+           x="501.27216"
+           y="177.79187"
+           id="text4432-8"
+           transform="scale(0.99716784,1.0028402)"><tspan
+             sodipodi:role="line"
+             id="tspan4434-6"
+             x="501.27216"
+             y="177.79187"
+             style="stroke:none">Forward packet</tspan></text>
+      </g>
+    </g>
+    <g
+       transform="translate(6.3497554,66.501853)"
+       id="g4630-7">
+      <path
+         id="path4238-2"
+         d="m 286.88332,231.10816 0,40.40611"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)" />
+      <text
+         transform="scale(1.1655333,0.85797635)"
+         id="text4428-6"
+         y="294.26315"
+         x="254.80597"
+         style="font-size:34.31905365px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="294.26315"
+           x="254.80597"
+           id="tspan4430-3"
+           sodipodi:role="line">no</tspan></text>
+    </g>
+    <g
+       id="g4448-0-1"
+       transform="translate(-279.30817,190.24554)">
+      <g
+         id="g4625-9"
+         transform="translate(-4.0406102,2.0203051)">
+        <g
+           id="g4727">
+          <rect
+             y="153.28677"
+             x="493.92496"
+             height="35.434616"
+             width="199.07933"
+             id="rect4446-1-0"
+             style="fill:#63f62b;fill-opacity:0.45777779;stroke:#00c700;stroke-width:0.92072088;stroke-opacity:1" />
+          <text
+             transform="scale(0.99716784,1.0028402)"
+             id="text4432-8-0"
+             y="179.80646"
+             x="497.22006"
+             style="font-size:31.56004143px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+             xml:space="preserve"><tspan
+               style="stroke:none"
+               y="179.80646"
+               x="497.22006"
+               id="tspan4434-6-6"
+               sodipodi:role="line">Drop packet</tspan></text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

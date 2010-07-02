@@ -21,6 +21,7 @@
 %\usepackage{ucs}
 %\usepackage[utf8x]{inputenc}
 %\usepackage[english,romanian]{babel}
+\usepackage{verbatim}
 
 \usepackage{makeidx}
 
