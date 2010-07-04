@@ -4,27 +4,33 @@
 \section{Project Description}
 \label{sec:proj}
 
-\project is an application built using Linux kernel library (a description of LKL can be found in \secref{sec:lkl}) with the purpose of implementing network devices such as router, switch, nat, firewall, hub by reusing the TCP/IP stack from the Linux kernel. The purpose of this project is firstly to simulate very complex topologies and, secondly to not be isolated from non-LKL world.
+\project is an application built using Linux kernel library (a description of LKL can be found in \secref{sec:lkl}) with the purpose of implementing network devices such as router, switch, nat, firewall, hub by reusing the TCP/IP stack from the Linux kernel so that in the end every device will offer a full TCP/IP stack. Since being built using LKL, \project will bennefit from enhancements made in the TCP/IP stack from Linux kernel. The purpose of this project is firstly to simulate very complex topologies and, secondly to not be isolated from non-LKL world.
 
 Besides the devices implemented by using LKL, two more devices (built as standard applications) were needed; a bridge intented to connect LKL processes with non-LKL ones and a hub  intented to connect LKL network devices and to which the bridge connects as well.
 
 It was intented for \project to be able to communicate with non-LKL processes so that it can bennefit from the usage of some tools. Throughout the \project development this feature was a great aid for testing the behaviour of devices(ping and wireshark were frequently used).   
 
-Network topologies can be defined using configuration files. The entire topology is controlled by a hypervisor which boots the devices, saves changes done in the topology and communicates with the devices in order to send them information about the topology.
+Network topologies can be defined using configuration files and,but not mandatory, a GUI. The entire topology is controlled by a hypervisor which boots the devices, saves changes done in the topology and communicates with the devices in order to send them information about the topology.
+
 Every LKL network device is a new LKL instance which has a reserved a memory space of 16MB RAM.
 Implementation details and configuration file examples and the syntax needed to write them are given in \chapref{chapter:impl} and in \chapref{ch:config-file}.
 \subsection{Project Scope}
 \label{sub-sec:proj-scope}
+Simulators come with a great advantage over real network devices that is the posibility of constructing very complex topologies in a short time with a much lower cost and have a very similar behaviour to real-world topologies so that they are a perfcect tool for educational and research purposes. Obviously there are some disadvanteges too such as lower performance levels than real devices and the fact that after all they are only simulating topologies.
 
-educational
+\project is intented to be used for \textbf{educational} purposes, as a tool for networking-related courses in faculty and, also for \textbf{research} purposes hence the need for a command line interface and a graphical user interface so that the configuration of devices be easy and attention be oriented towards observing and creating new situations.
 
-research
+The way \project is built enables researches to test new network protocols by implementing them in the Linux kernel or to test the impact some changes in current protocols could have and if any of these turn to be feasible the effort necessary to integrate them with the Linux kernel will be minimum. Also, being able to communicate with other processes through the use of tun/tap interface, might facilitate an easier testing process and looking from the educational point of view might allow an accurate investigation of traffic and thus a better understanding of networking protocols and behaviours.  
 
 \subsection{Project Objectives}
 \label{sub-sec:proj-objectives}
-
-The system shouldn't be isolated from the outside world. It would be advantageous to be able
-to include applications outside the LKL ecosystem;
+Some objectives have been defined for \project:
+\begin{itemize}
+\item Even though a not stated objective, \project has proven once again that when needing to reuse some already implemented features from the Linux kernel, LKL turns out to be a feasible solution.
+\item \project is to be used to simulate topologies having a great number of network devices (even thousands of network devices)
+\item The topologies created using \project should be able to communicate with other, non-LKL, processes.
+\item \project should be easy to use
+\end{itemize}
 
 \section{Related Work}
 \label{sec:proj-related}
