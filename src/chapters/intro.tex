@@ -26,54 +26,36 @@ The way \project is built enables researches to test new network protocols by im
 \label{sub-sec:proj-objectives}
 Some objectives have been defined for \project:
 \begin{itemize}
+\item Simulate network devices (host, switch, router, nat, firewall) using LKL and afterwards simulate topologies having a great number of network devices (even thousands of network devices)
 \item Even though a not stated objective, \project has proven once again that when needing to reuse some already implemented features from the Linux kernel, LKL turns out to be a feasible solution.
-\item \project is to be used to simulate topologies having a great number of network devices (even thousands of network devices)
 \item The topologies created using \project should be able to communicate with other, non-LKL, processes.
 \item \project should be easy to use
 \end{itemize}
 
+If, and how these objectives were met during the \project development is the subject of this bachelor thesis.
 \section{Related Work}
 \label{sec:proj-related}
 
 \subsubsection{Dynamips}
-
-Dynamips started initialy as an Cisco 7200 emulator, but it now supports many other
-Cisco platforms (3600, 3700 and 2600). It is an emulator, meaning that the emulated
-devices act like the real devices, but also that is a little bit slow. It's
-homepage \footnote{\url{http://www.ipflow.utc.fr/index.php/Cisco_7200_Simulator}}
-states that it can go up to 1kpps. 
-
-The emulated devices:
+Dynamips is an emulator written to emulate Cisco routers which runs on Linux, Windows and Mac OS X. It started as a project to emulate a Cisco 7200 but now supports  Cisco 3600, 3700 and 2600 series.
+Being an emulator, Dynamips acts like a real device but at a lower speed; the best performance one can get on a host is 1kbps\footnote{As stated on the project's homepage \url{http://www.ipflow.utc.fr/index.php/Cisco_7200_Simulator}}
+Below is a list of some characteristics of Dynamips:
 \begin{itemize}
-  \item MIPS64 and PowerPC CPUs
-  \item DRAM and SRAM
-  \item Network modules:
-    \begin{itemize}
-      \item NM-1E
-      \item NM-4E
-      \item NM-1ESW
-    \end{itemize}
-  \item Temperature and Voltage sensors
-\end{itemize}
-
-Although the devices in dynamips work exactly like a real Cisco device, there are a few disadvanteges:
-\begin{itemize}
-  \item It requires an IOS image.
-  \item High memory and CPU usage, thus limiting the number of devices that can be emulated on one computer.
-  \item It can only emulate routers, not other devices.
-  \item It can only simulate Cisco devices.
-  \item The device code cannot be modified.
+\item Dynamips requires a Cisco IOS image in order to emulate the devices 
+\item The number of network devices it can emulate is limited as it requires high memory and high processor usage
+\item It can only emulate routers and no other devices and the routers emulated are exclusively Cisco routers
+\item The source code is licensed under the GNU GPL which grants rights to modify and redistribute the software
 \end{itemize}
 
 \subsubsection{Packet Tracer}
+Packet Tracer is a Cisco proprietary network simulation program used as a teaching and learning tool. It allows users to create network topologies, configure devices, inject packets, and simulate a network with multiple visual representations.
 
-Packet tracer is a proprietary tool developed by Cisco. It is primary used as a learning tool
-in Cisco Certified Network Assistent courses offered by Cisco.
-Packet tracer is only a simulator and does not run code that runs on the Cisco devices, so
-it is unsuitable for a realistic simulation of complex networks. It is also closed source, so
-the devices cannot be modified.
+Since it is a simulator, Packet Tracer utilizes only a small number of features found within the actual hardware running a current Cisco IOS thus being appropriate for learning purposes but not for realistic network simulations.
+It is a closed source program so that no modifications can be done to the devices.
+\subsubsection[Network Simulator ns-2]{Network Simulator ns-2\footnote{\url{http://www.isi.edu/nsnam/ns/}}}
 
-
-\subsubsection{NS-2}
+ns-2 is a discrete event simulator targeted to research. It provides substantial support for simulation of TCP, routing, and multicast protocols over wired and wireless networks. It is still an ongoing project and bugs are still discovered and fixed.
+\begin{comment}
 Ns(network simulator) is a discrete event network simulator used for networking research.
 \todo{Learn more about NS-2}
+\end{comment}
