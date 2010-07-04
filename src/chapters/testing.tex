@@ -1,22 +1,79 @@
 \chapter{Testing}
 \label{ch-testing}
 
-\section{Throughput}
-\subsection{Hub}
-\subsection{Router}
-\subsection{NAT}
+\section{Round Trip Time and Throughput}
+\label{sec:rt-troughput}
 
-\section{Packets per second} 
-\subsection{Hub}
-\subsection{Router}
-\subsection{NAT}
+In order to test the Response Time for a LKL device we have chosen the router and built a simple topology shown below:
+\fig[scale=0.5]{src/img/throughput.png}{img:throughput}{Topology for testing Response Time and Throughput}
+\begin{center}
+  \begin{table}[htb]
+  \begin{center}
+  \begin{tabular}{| l | l | l | l |}
+    \hline
+      Device Name & Interface & IP & Port \\ \hline
+      Router0 & eth0 & 191.168.100.1/24 & x \\ \hline
+      Hub0 & x & x & 50001\\ \hline
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{Topology description}
+  \label{table:resp-time}
+  \end{table}
+\end{center}
 
-\section{Packets per second}
-\subsection{Hub}
-\subsection{Router}
-\subsection{NAT}
+
+For injecting traffic in the topology a bridge was connected to the hub and a route to the router's interface was added via tap0. In order for the bridge to connect to the hub, a configuration file is passed as a command line argument when running it for specifying the port and system address where the hub runs.
+The  configuration file is: 
+\lstset{language=TeX, caption=Bridge configuration file}
+\lstinputlisting{src/code/bridge/bridge-config}
+For starting the brodge, root permissions are needed in order to create the tap interface.
+The commands for setting the bridge, after starting it are:
+\lstset{language=TeX,caption=Commands for configuring the bridge,label=test-bridge-config}
+\begin{lstlisting}
+Setting the tap interface up: sudo ip link set tap0 up
+Setting an IPv4 address on the new created tap interface: sudo ip addr add 192.168.100.100/24 dev tap0
+Adding a new route to the router interface through tap0 interface: sudo ip route add 192.168.100.0/24 dev tap0
+\end{lstlisting}
+
+The next step is to inject traffic into the topology via the bridge(tap0) using ping.
+For two transmissions of 1000 packets using ping (in)the results are:
+\begin{lstlisting}
+$sudo ping -f 192.168.100.1 -c 1000 -s 1400
+PING 192.168.100.1 (192.168.100.1) 1400(1428) bytes of data.
+                
+--- 192.168.100.1 ping statistics ---
+1000 packets transmitted, 1000 received, 0% packet loss, time 13771ms
+rtt min/avg/max/mdev = 35.973/114.888/200.100/34.401 ms, pipe 16, ipg/ewma 13.785/128.326 ms
+
+$ sudo ping -f 192.168.100.1 -c 1000 
+PING 192.168.100.1 (192.168.100.1) 56(84) bytes of data.
+               
+--- 192.168.100.1 ping statistics ---
+1000 packets transmitted, 1000 received, 0% packet loss, time 13538ms
+rtt min/avg/max/mdev = 6.929/112.462/196.023/34.576 ms, pipe 15, ipg/ewma 13.552/105.503 ms
+\end{lstlisting}
+Let us now interpret the results of ping command:
+As it can be seen, the transmission time does not change dramatically with the size of packets, suggesting that the bottleneck is not the time to process a packet of a given size but maybe the necessary time for the OS to start the thread for the LKL network interface.
+\begin{itemize}
+\item \textbf{Round Trip Time} is defined as the length of time it takes for a packet to be sent plus the length of time it takes for an acknowledgement of that packet to be received.
+As it can be seen from ping output 
+
+\textbf{rtt min/avg/max/mdev = 6.929/112.462/196.023/34.576 ms}
+for a 56B packet length (the default packet size for ping) and 
+
+\textbf{rtt min/avg/max/mdev = 35.973/114.888/200.100/34.401 ms}
+
+for a 1400B packet size. There is no significant difference for the average,maximum RTT time or the standard deviation\footnote{\url{http://en.wikipedia.org/wiki/Standard_deviation}}, the only difference being in the minimum RTT for a packet.  
+\item \textbf{Inter-Packet Gap} is the idle time between two subsequent packet transmissions which gives the medium enought time to stabilize and network devices time to process the packet;
+
+\item \textbf{Exponential Weighted Moving Average}\footnote{\url{http://en.wikipedia.org/wiki/Moving_average_(finance)#Exponential_moving_average}} During operations, the effective idletime is measured using an exponential weighted moving average (EWMA), which considers recent packets to be exponentially more important than past ones. 
+
+\item \textbf{Throughput} is defined as the average rate of successful message delivery over a communication channel. Its measurement unit is either bps (bits per second) or packets per second.
+I have decided to compute the \textbf{throughput} based on the RTT as 1000/(2*RTT) which issues a throughput value of \approx 37 packets per second. 
 
 \section{Scalability}
-\subsection{Hub}
-\subsection{Router}
-\subsection{NAT}
+\label{sec:scalability}
+
+\section{Complex Topologies}
+\label{sec:complex-top}
