@@ -4,8 +4,15 @@
 \section{Project Description}
 \label{sec:proj}
 
-\project
+\project is an application built using Linux kernel library (a description of LKL can be found in \secref{sec:lkl}) with the purpose of implementing network devices such as router, switch, nat, firewall, hub by reusing the TCP/IP stack from the Linux kernel. The purpose of this project is firstly to simulate very complex topologies and, secondly to not be isolated from non-LKL world.
 
+Besides the devices implemented by using LKL, two more devices (built as standard applications) were needed; a bridge intented to connect LKL processes with non-LKL ones and a hub  intented to connect LKL network devices and to which the bridge connects as well.
+
+It was intented for \project to be able to communicate with non-LKL processes so that it can bennefit from the usage of some tools. Throughout the \project development this feature was a great aid for testing the behaviour of devices(ping and wireshark were frequently used).   
+
+Network topologies can be defined using configuration files. The entire topology is controlled by a hypervisor which boots the devices, saves changes done in the topology and communicates with the devices in order to send them information about the topology.
+Every LKL network device is a new LKL instance which has a reserved a memory space of 16MB RAM.
+Implementation details and configuration file examples and the syntax needed to write them are given in \chapref{chapter:impl} and in \chapref{ch:config-file}.
 \subsection{Project Scope}
 \label{sub-sec:proj-scope}
 
