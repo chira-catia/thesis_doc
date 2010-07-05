@@ -70,7 +70,7 @@ for a 1400B packet size. There is no significant difference for the average,maxi
 \item \textbf{Exponential Weighted Moving Average}\footnote{\url{http://en.wikipedia.org/wiki/Moving_average_(finance)#Exponential_moving_average}} During operations, the effective idletime is measured using an exponential weighted moving average (EWMA), which considers recent packets to be exponentially more important than past ones. 
 
 \item \textbf{Throughput} is defined as the average rate of successful message delivery over a communication channel. Its measurement unit is either bps (bits per second) or packets per second.
-I have decided to compute the \textbf{throughput} based on the RTT as 1000/(2*RTT) which issues a throughput value of \approx 37 packets per second. 
+I have decided to compute the \textbf{throughput} based on the RTT as 2*1000/RTT which issues a throughput value of \approx 150 packets per second. 
 
 \section{Scalability}
 \label{sec:scalability}
@@ -100,7 +100,7 @@ Below is a table showing the memory requirements of Hub and Router devices for d
   \begin{tabular}{| l | l | l |}
     \hline
       Device Name & State & Memory Use \\ \hline
-      Hub & Running & \aprox 80kB \\ \hline
+      Hub & Running & \approx 80kB \\ \hline
       Router & Just started & 1.7 MB\\ \hline
       Router & 1000 routes more & 2-3 MB more\\ \hline
       Router & 100 NAT or Firewall rules more & 2-3 MB more\\ \hline		
