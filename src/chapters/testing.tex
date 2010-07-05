@@ -75,5 +75,43 @@ I have decided to compute the \textbf{throughput} based on the RTT as 1000/(2*RT
 \section{Scalability}
 \label{sec:scalability}
 
+In order to test how scalable a router is, i have tested the memory it requires for different load levels varying the number of routes and the number of NAT and Firewall rules.
+\figref{img:routes-used-mem} presents the results obtained by varying the number of routes.
+\fig[scale=0.4]{src/img/routes-mem.png}{img:routes-used-mem}{Required Memory by Routes}
+As it can be seen the memory needed varies almost lineary with the number of rules, 1000 more rules requiring 2 or 3 MB.
+
+During these tests i have tested as well, how the time to forward packets is influenced by the number of routes in the route table using the topology presented in \figref{img:routes-forward}, where routes were added on Router0, a server was connected to Hub2 and a client connected to Hub0. The time for receiving the server response was only slightly different with the increase of routes number, proving that the route was already in cache.
+\fig[scale=0.4]{src/img/routes-forward.png}{img:routes-forward}{Topology for testing Necessary Time to Search Routing Table}
+
+When testing how the increase of NAT and Firewall rules influences memory use, the results were almost similar for NAT and Firewall rules since they both are represented as ipt_entry structures.\figref{img:nat-used-mem} ilustrates these results.
+\fig[scale=0.4]{src/img/nat-firewall-mem.png}{img:nat-used-mem}{Required Memory by NAT and Firewall Rules}
+
+
+I have tested as well CPU load due to a running router connecting a bridge to interface eth0 of Router0 from the topology presented in \figref{img:routes-forward} and pinging the router interface using the following command
+\lstset{language=TeX,caption=Commands for configuring the bridge,label=test-bridge-config}
+\begin{lstlisting}
+sudo ping 10.10.10.10 -f
+\end{lstlisting}
+and the highest load was 4\%.
+
+Below is a table showing the memory requirements of Hub and Router devices for different loads:
+\begin{center}
+  \begin{table}[htb]
+  \begin{center}
+  \begin{tabular}{| l | l | l |}
+    \hline
+      Device Name & State & Memory Use \\ \hline
+      Hub & Running & \aprox 80kB \\ \hline
+      Router & Just started & 1.7 MB\\ \hline
+      Router & 1000 routes more & 2-3 MB more\\ \hline
+      Router & 100 NAT or Firewall rules more & 2-3 MB more\\ \hline		
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{Memory Requirements for Devices}
+  \label{table:mem-req}
+  \end{table}
+\end{center}
+
 \section{Complex Topologies}
 \label{sec:complex-top}
