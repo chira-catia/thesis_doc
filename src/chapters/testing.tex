@@ -86,7 +86,6 @@ During these tests i have tested as well, how the time to forward packets is inf
 When testing how the increase of NAT and Firewall rules influences memory use, the results were almost similar for NAT and Firewall rules since they both are represented as ipt_entry structures.\figref{img:nat-used-mem} ilustrates these results.
 \fig[scale=0.4]{src/img/nat-firewall-mem.png}{img:nat-used-mem}{Required Memory by NAT and Firewall Rules}
 
-
 I have tested as well CPU load due to a running router connecting a bridge to interface eth0 of Router0 from the topology presented in \figref{img:routes-forward} and pinging the router interface using the following command
 \lstset{language=TeX,caption=Commands for configuring the bridge,label=test-bridge-config}
 \begin{lstlisting}
@@ -115,3 +114,55 @@ Below is a table showing the memory requirements of Hub and Router devices for d
 
 \section{Complex Topologies}
 \label{sec:complex-top}
+After doing tests on simple topologies the logical next step was to test the behaviour of \project devices when used for more complex topologies. 
+The scenario for this simulation was a basic one: we wanted to be able to access a web page (lklnet.org -a nonexistent page that we built) using an existing browser(such as Chrome, Mozilla,etc) and be able, at the same time to sniff the network traffic in order to see packets exchanged to fulfil the request for the page.
+In order to achieve these topology requests we needed to connect some external application to the \project devices: the web browser used on the localhost, a dns server and a web server both virtual machines; all the external applications were connected using the bridge.  
+The topology we built is shown in \figref{img:web}.
+\fig[scale=0.4]{src/img/web.png}{img:web}{Complex Topology Simulation}
+The router and switch configuration is:
+\begin{center}
+  \begin{table}[htb]
+  \begin{center}
+  \begin{tabular}{| l | l |}
+	\hline
+	Interface & IP \\ \hline
+	eth0 & 192.168.100.1/24 \\ \hline
+	eth1 & 192.168.200.1/24 \\	 
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{Router config}
+  \label{table:complex-router}
+  \end{table}
+\end{center}
+
+\begin{center}
+  \begin{table}[htb]
+  \begin{center}
+  \begin{tabular}{| l | l |}
+    \hline
+	Interface & MAC\\ \hline
+	eth0 & 00:bb:cc:00:01:01\\ \hline
+	eth1 & 00:bb:cc:00:02:02\\ \hline
+	eth2 & 00:bb:cc:00:01:02\\
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{Switch config}
+  \label{table:complex-switch}
+  \end{table}
+\end{center}
+Besides the already connected bridges one additional one was connected between the switch and router to allow the traffic sniff.
+After issuing the request form the webpage, the following actions taken in order to satisfy the request can be observed, and the page will be shown in the browser:
+\begin{itemize}
+	\item ARP request is made for the DNS server address
+	\item Switches broadcasts the packet
+	\item ARP response from the DNS server
+	\item DNS request from the web browser
+	\item DNS response from the DNS server
+	\item TCP connection
+	\item Web page request
+	\item Web page response
+	\item TCP hangup
+\end{itemize}
+
