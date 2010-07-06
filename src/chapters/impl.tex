@@ -63,12 +63,7 @@ for adding new data, RTM_DEL\textit{FAMILY_NAME} for deleting data and RTM_GET\t
 \item \textbf{Traffic Control Service} provides the ability to provision, query or listen to
    events under the auspices of traffic control.  These include queuing
    disciplines, (schedulers and queue treatment algorithms -- e.g.,
-   priority-based scheduler or the RED algorithm) and classifiers. It makes use of three message families:
-\begin{itemize} 
-\item{\bf QDISC}
-\item{\bf CLASSES}
-\item{\bf FILTERS}
-\end{itemize}
+   priority-based scheduler or the RED algorithm) and classifiers. It makes use of three message families:\textbf{QDISC}, \textbf{CLASSES}, \textbf{\bf FILTERS}.
 \end{itemize} 
 
 \subsection{\project implementation}
@@ -96,12 +91,16 @@ The route support was implemented using the Netlink Interface specifically the R
 The structure that represents the netlink message header is struct nlmsghdr:
 \lstset{language=C, caption=Netlink Message Header Structure}
 \lstinputlisting{src/code/impl/nlmsghdr.c}
-For adding or removing a route, the nlmsg_flags equals NLM_F_REQUEST|NLM_F_CREATE|NLM_F_EXCL; for adding a route nlmsg_type is RTM_NEWROUTE and for deleting a rule its value is RTM_DELROUTE. 
+For adding or removing a route, the nlmsg_flags equals NLM_F_REQUEST|NLM_F_CREATE|NLM_F_EXCL; for adding a route nlmsg_type is RTM_NEWROUTE and for deleting a rule its value is RTM_DELROUTE.
+\\
+ 
 The structure representing the Service Message Template is struct rtmsg:
 \lstset{language=C, caption=Service Message Template Structure}
 \lstinputlisting{src/code/impl/structrtmsg.c}
+
 Both adding and removing a route target only the main table so that rtm_table must be equal to RT_TABLE_MAIN, the scope of the route is RT_SCOPE_SITE, the protocol is static and the type of the route is RTN_UNICAST.
 Subsequent to filling the netlink message, a socket must be created, data transmitted to the kernel and verifying that the request was received and fulfilled, and in the end the socket must be closed.
+
 \lstset{language=C, caption=Communicating with the kernel}
 \lstinputlisting{src/code/impl/addroute.c}  
 
@@ -237,6 +236,7 @@ Netfilter is a framework that provides hook handling within the Linux kernel for
 manipulating network packets. IPv4 protocol has five hooks which are well-defined points in a packet's 
 traversal of that protocol stack. At each of these points, the protocol will call the netfilter framework 
 with the packet and the hook number.
+\\
 
 These hooks are:
 \begin{enumerate}
@@ -454,9 +454,9 @@ The role of the hub as a link between devices is obvious from the above topologi
 Below is a dump of an IP packet sent by the client from the DNAT proof of concept example
 (\ref{nat-impl:DNAT}) that traverses hub1 on its way to the server proving the fact that 
 the hub prints information about the IP packets that traverse it (at present only the Ethernet and IP headers).
+\pagebreak[4]
 \lstset{language=TeX, caption=Hub-print packet information}
 \begin{lstlisting}
-===============================================
 Ethernet:
 			Destination:	AA:11:11:11:11:11
 			Source:	AA:B1:11:00:01:01
@@ -467,8 +467,6 @@ IP:
 		fragment_offset=2048	TTL=63	protocol=6
 		Destination:	10.10.10.101
 		Source:168.16.21.91
-
-===============================================
 \end{lstlisting}
  
 

@@ -1,0 +1,26 @@
+\chapter{ipt_entry structure}
+\label{appendix:ipt-entry}
+\lstset{language=C,caption=,label=test-bridge-config}
+\begin{lstlisting}
+struct ipt_entry
+{
+	struct ipt_ip ip;
+
+	/* Mark with fields that we care about. */
+	unsigned int nfcache;
+
+	/* Size of ipt_entry + matches */
+	u_int16_t target_offset;
+	/* Size of ipt_entry + matches + target */
+	u_int16_t next_offset;
+
+	/* Back pointer */
+	unsigned int comefrom;
+
+	/* Packet and byte counters. */
+	struct xt_counters counters;
+
+	/* The matches (if any), then the target. */
+	unsigned char elems[0];
+};
+\end{lstlisting}
