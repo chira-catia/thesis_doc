@@ -122,7 +122,23 @@ In order to achieve these topology requirements we needed to connect some extern
 All the external applications were connected in the topology using the bridge.  
 The topology we built is shown in \figref{img:web}.
 \fig[scale=0.4]{src/img/web.png}{img:web}{Complex Topology Simulation}
-
+The systems and their associated IPv4 addresses are listed in \tableref{table:complex-ip}
+\begin{center}
+  \begin{table}[htb]
+  \begin{center}
+  \begin{tabular}{| l | l |}
+	\hline
+	System & IP \\ \hline
+	Web Browser & 192.168.100.123/24 \\ \hline
+	DNS Server & 192.168.100.200/24 \\ \hline
+	Web Server & 192.168.200.123/24 \\	 
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{Complex topology:IP addresses}
+  \label{table:complex-ip}
+  \end{table}
+\end{center}
 The router configuration is presented in \tableref{table:complex-router}
 \begin{center}
   \begin{table}[htb]
@@ -170,4 +186,14 @@ The actions needed to retrieve the requested webpage are listed below:
 	\item TCP hangup
 \end{itemize}
 The packets exchanged during these actions can be seen using tcpdump tool connected to one or more of the bridges.
+Following is a dump of packets obtained from the bridge connected between the web browser and the switch:
+\lstset{language=TeX,caption=,label=tcpdump}
+\begin{lstlisting}
+tcpdump -ne -i tap0 "arp"
+listening on tap0, link-type EN10MB (Ethernet), capture size 96 bytes
+13:02:05.904217 7e:63:a6:ce:d8:dd > aa:bb:cc:00:01:02, ethertype ARP (0x0806), length 42: Request who-has 192.168.100.1 tell 192.168.100.123, length 28
+13:02:05.905068 aa:bb:cc:00:01:02 > 7e:63:a6:ce:d8:dd, ethertype ARP (0x0806), length 42: Reply 192.168.100.1 is-at aa:bb:cc:00:01:02, length 28
+\end{lstlisting}
+One can see that the above dump is from an ARP request for the MAC address of the gateway which is the router. 
+
 
