@@ -1,7 +1,27 @@
 \chapter{Conclusions}
 \label{chapter:conclusions}
-\project can be used for educational and research purposese
 
-it does work with non-LKL applications
+\project devices were implemented by reusing subsystems of the Linux TCP/IP stack. By using Linux kernel library the integration of Linux kernel code was done in an elegant way with much less effort than the effort implied by trying to isolate the Linux kernel TCP/IP stack implementation and then reusing it. \project proves that LKL is a very feasible solution for integrating in applications code found in the Linux kernel.
 
-can simulate complex topologies(even more complex after multiple hypervisors)
+Implemented as a virtual architecture and being used in applications as a library the performances of LKL are lower than the ones of a system running Linux and, therefore, the performances of \project devices are below the performances of real devices but \project is intended to be a network simulator so these lower performances are acceptable.
+
+All of the main objectives, enumerated in \subsecref{sub-sec:proj-objectives} were met:
+\begin{itemize}
+\item \project simulates network devices which operate properly both as stand-alone devices and as part of network topologies as proven by the device tests for every device and by \chapref{ch-testing}.
+
+\chapref{ch-testing} also illustrates the fact that complex topologies can be built using \project and that the system requirements are not a too great impediment to building topologies having a great number of nodes.
+\item The bridge device built using a tun/tap interface assures a medium of communication between LKL devices and non-LKL processes and so, topologies built using \project are not isolated from the outer world. 
+
+At the same time, more complex simulations can be done by using already functional applications without the need to implement these applications using LKL, making \project a powerful network simulator.
+\item  Soon after we started to work on \project we realised the need to implement mechanisms for an easier way to specify the topologies.
+
+The first step for doing this was the configuration of devices through configuration files -having a easy-to-learn way of specification, after that, the CLI followed having a command history and autocomplete and thus making the job of configuring devices and retrieving information about them even easier. Last but not least, GUI made a great difference permitting the configuration of devices and the building of topologies without any prior knowledge of the configuration file syntax.
+
+At present \project meets the objective of being easy to use. 
+\end{itemize}
+
+Due to the way LKL is implemented, \project can be used to build and test new network protocols which can thereafter be integrated with little effort in the Linux kernel.
+
+The \project devices were implemented taking into account that the implementation should be the most stable from the available solutions (as is the case of forward activation for the router) or the implementation should use the most recent solution from the Linux kernel in order for \project to benefit from the enhancements of the TCP/IP stack implementation in the next Linux kernel versions.
+
+At present \project can serve its purposes well but after the tasks presented in \chapref{chapter:further} done it will be a great tool for research and learn purposes. 

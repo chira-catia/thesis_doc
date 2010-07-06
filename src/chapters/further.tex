@@ -8,7 +8,7 @@ Such a feature can be useful both for educational purposes (replaying the scenar
 
 \subsubsection{Migration to other OS}
 \label{sec:migration-os}
-One of the purposes of Linux kernel library is to be used in many different environments. In the current version of \project the network driver is implemented only for Linux, so in order to be able to run LKL-net programs on a system running an OS different from Linux the network driver should be implemented for other enviromnents.
+One of the purposes of Linux kernel library is to be used in many different environments. In the current version of \project the network driver is implemented only for Linux, so in order to be able to run LKL-net programs on a system running an OS different from Linux the network driver should be implemented for other environments.
 The other tools used (readline library, flex, gtk) are platform independent\todo{say this better}
 
 \subsubsection{Physical layer simulation}
@@ -17,9 +17,9 @@ This feature would enable packet transmission at different speeds and thus obser
 
 \subsubsection{Configuration of a routing protocol}
 \label{sec:routing-prot}
-Configuring static routes can be a time-consuming task for complex, frequently changing topologies so that being able to configurate a routing protocol would make simulating complex topologies easier and, at the same time, testing different scenarios would require less time to configure. The time gained from dinamically added routes in the routing table could then be used for other more useful purposes.
+Configuring static routes can be a time-consuming task for complex, frequently changing topologies so that being able to configure a routing protocol would make simulating complex topologies easier and, at the same time, testing different scenarios would require less time to configure. The time gained from dynamically added routes in the routing table could then be used for other more useful purposes.
 
-This task could be done by porting \textbf{Zebra}\footnote{The website is \url{http://www.zebra.org/}} to LKL-net. Gnu Zebra is a software that managest TCP/IP routing protocols offering support for  RIPv1, RIPv2, OSPFv2 and BGP-4 routing protocols.
+This task could be done by porting \textbf{Zebra}\footnote{The website is \url{http://www.zebra.org/}} to LKL-net. Gnu Zebra is a software that manages TCP/IP routing protocols offering support for  RIPv1, RIPv2, OSPFv2 and BGP-4 routing protocols.
 
 \subsubsection{Communication between multiple hypervisors}
 \label{sec:hypervisor-comm}
@@ -27,4 +27,4 @@ At present the hypervisor is responsible for starting all the devices, commandin
 
 When needing data about some device it does not command, one hypervisor would need a mechanism for retrieving it from the other hypervisors. 
 
-Having more physcal systems to run LKL processes on, the complexity of the simulated topologies would increase.
+Having more physical systems to run LKL processes on, the complexity of the simulated topologies would increase.

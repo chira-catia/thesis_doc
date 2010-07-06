@@ -27,7 +27,7 @@ For injecting traffic in the topology a bridge was connected to the hub and a ro
 The  configuration file is: 
 \lstset{language=TeX, caption=Bridge configuration file}
 \lstinputlisting{src/code/bridge/bridge-config}
-For starting the brodge, root permissions are needed in order to create the tap interface.
+For starting the bridge, root permissions are needed in order to create the tap interface.
 The commands for setting the bridge, after starting it are:
 \lstset{language=TeX,caption=Commands for configuring the bridge,label=test-bridge-config}
 \begin{lstlisting}
@@ -65,25 +65,25 @@ for a 56B packet length (the default packet size for ping) and
 \textbf{rtt min/avg/max/mdev = 35.973/114.888/200.100/34.401 ms}
 
 for a 1400B packet size. There is no significant difference for the average,maximum RTT time or the standard deviation\footnote{\url{http://en.wikipedia.org/wiki/Standard_deviation}}, the only difference being in the minimum RTT for a packet.  
-\item \textbf{Inter-Packet Gap} is the idle time between two subsequent packet transmissions which gives the medium enought time to stabilize and network devices time to process the packet;
+\item \textbf{Inter-Packet Gap} is the idle time between two subsequent packet transmissions which gives the medium enough time to stabilize and network devices time to process the packet;
 
 \item \textbf{Exponential Weighted Moving Average}\footnote{\url{http://en.wikipedia.org/wiki/Moving_average_(finance)#Exponential_moving_average}} During operations, the effective idletime is measured using an exponential weighted moving average (EWMA), which considers recent packets to be exponentially more important than past ones. 
 
 \item \textbf{Throughput} is defined as the average rate of successful message delivery over a communication channel. Its measurement unit is either bps (bits per second) or packets per second.
 I have decided to compute the \textbf{throughput} based on the RTT as 2*1000/RTT which issues a throughput value of \approx 150 packets per second. 
-
+\end{itemize}
 \section{Scalability}
 \label{sec:scalability}
 
 In order to test how scalable a router is, i have tested the memory it requires for different load levels varying the number of routes and the number of NAT and Firewall rules.
 \figref{img:routes-used-mem} presents the results obtained by varying the number of routes.
 \fig[scale=0.4]{src/img/routes-mem.png}{img:routes-used-mem}{Required Memory by Routes}
-As it can be seen the memory needed varies almost lineary with the number of rules, 1000 more rules requiring 2 or 3 MB.
+As it can be seen the memory needed varies almost linear with the number of rules, 1000 more rules requiring 2 or 3 MB.
 
 During these tests i have tested as well, how the time to forward packets is influenced by the number of routes in the route table using the topology presented in \figref{img:routes-forward}, where routes were added on Router0, a server was connected to Hub2 and a client connected to Hub0. The time for receiving the server response was only slightly different with the increase of routes number, proving that the route was already in cache.
 \fig[scale=0.4]{src/img/routes-forward.png}{img:routes-forward}{Topology for testing Necessary Time to Search Routing Table}
 
-When testing how the increase of NAT and Firewall rules influences memory use, the results were almost similar for NAT and Firewall rules since they both are represented as ipt_entry structures.\figref{img:nat-used-mem} ilustrates these results.
+When testing how the increase of NAT and Firewall rules influences memory use, the results were almost similar for NAT and Firewall rules since they both are represented as ipt_entry structures.\figref{img:nat-used-mem} illustrates these results.
 \fig[scale=0.4]{src/img/nat-firewall-mem.png}{img:nat-used-mem}{Required Memory by NAT and Firewall Rules}
 
 I have tested as well CPU load due to a running router connecting a bridge to interface eth0 of Router0 from the topology presented in \figref{img:routes-forward} and pinging the router interface using the following command

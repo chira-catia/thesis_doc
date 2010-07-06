@@ -4,23 +4,24 @@
 \section{Project Description}
 \label{sec:proj}
 
-\project is an application built using Linux kernel library (a description of LKL can be found in \secref{sec:lkl}) with the purpose of implementing network devices such as router, switch, nat, firewall, hub by reusing the TCP/IP stack from the Linux kernel so that in the end every device will offer a full TCP/IP stack. Since being built using LKL, \project will bennefit from enhancements made in the TCP/IP stack from Linux kernel. The purpose of this project is firstly to simulate very complex topologies and, secondly to not be isolated from non-LKL world.
+\project is an application built using Linux kernel library (a description of LKL can be found in \secref{sec:lkl}) with the purpose of implementing network devices such as router, switch, nat, firewall, hub by reusing the TCP/IP stack from the Linux kernel so that in the end every device will offer a full TCP/IP stack. Since being built using LKL, \project will benefit from enhancements made in the TCP/IP stack from the Linux kernel.
 
-Besides the devices implemented by using LKL, two more devices (built as standard applications) were needed; a bridge intented to connect LKL processes with non-LKL ones and a hub  intented to connect LKL network devices and to which the bridge connects as well.
+The purpose of this project is firstly to simulate very complex topologies and, secondly to not be isolated from non-LKL world.
+It was intended for \project to be able to communicate with non-LKL processes so that it can benefit from the usage of some tools. Throughout the \project development this feature was of a great aid for testing the behaviour of devices(ping and wireshark were frequently used). 
 
-It was intented for \project to be able to communicate with non-LKL processes so that it can bennefit from the usage of some tools. Throughout the \project development this feature was a great aid for testing the behaviour of devices(ping and wireshark were frequently used).   
+Besides the devices implemented by using LKL, two more devices (built as standard applications) were needed: a bridge for the purpose of connecting LKL processes with non-LKL ones and a hub for connecting \project devices. Also the hub is an entry point for non-LKL processes into the LKL world through the use of tun/tap interfaces.  
 
-Network topologies can be defined using configuration files and,but not mandatory, a GUI. The entire topology is controlled by a hypervisor which boots the devices, saves changes done in the topology and communicates with the devices in order to send them information about the topology.
+Network topologies can be defined using configuration files and, but not mandatory, a GUI. The entire topology is controlled by a hypervisor which boots the devices, saves changes done in the topology and communicates with the devices in order to send them information about the topology.
 
-Every LKL network device is a new LKL instance which has a reserved a memory space of 16MB RAM.
-Implementation details and configuration file examples and the syntax needed to write them are given in \chapref{chapter:impl} and in \chapref{ch:config-file}.
+Every LKL network device is a new LKL instance which has a reserved memory space of 16MB RAM.
+Implementation details, configuration file examples and the associated syntax are given in \chapref{chapter:impl} and in \chapref{ch:config-file}.
 \subsection{Project Scope}
 \label{sub-sec:proj-scope}
-Simulators come with a great advantage over real network devices that is the posibility of constructing very complex topologies in a short time with a much lower cost and have a very similar behaviour to real-world topologies so that they are a perfcect tool for educational and research purposes. Obviously there are some disadvanteges too such as lower performance levels than real devices and the fact that after all they are only simulating topologies.
+Simulators come with a great advantage over real network devices that is the possibility of constructing very complex topologies in a short time at a much lower cost. Simulators have a very similar behaviour to real-world topologies thus being a perfect tool for educational and research purposes. Obviously there are some disadvantages as well, such as lower performance levels than real network devices and the fact that after all they are only simulating topologies.
 
-\project is intented to be used for \textbf{educational} purposes, as a tool for networking-related courses in faculty and, also for \textbf{research} purposes hence the need for a command line interface and a graphical user interface so that the configuration of devices be easy and attention be oriented towards observing and creating new situations.
+\project is intended to be used for \textbf{educational} purposes, as a tool for networking-related courses in faculty and, also for \textbf{research} purposes hence the need for a command line interface and a graphical user interface so that configuring the devices could be easyly done and the focus could be on observing topology behaviour and creating new scenarios.
 
-The way \project is built enables researches to test new network protocols by implementing them in the Linux kernel or to test the impact some changes in current protocols could have and if any of these turn to be feasible the effort necessary to integrate them with the Linux kernel will be minimum. Also, being able to communicate with other processes through the use of tun/tap interface, might facilitate an easier testing process and looking from the educational point of view might allow an accurate investigation of traffic and thus a better understanding of networking protocols and behaviours.  
+The way \project is built enables researches to test new network protocols by implementing them in the Linux kernel or to test the impact some changes in current protocols could have. If any of these turn to be feasible the effort necessary to integrate them with the Linux kernel would be minimum. Also, being able to communicate with other processes through the use of tun/tap interface, might facilitate an easier testing process and looking from the educational point of view might allow an accurate investigation of traffic and thus a better understanding of networking protocols and behaviours.  
 
 \subsection{Project Objectives}
 \label{sub-sec:proj-objectives}
@@ -28,7 +29,7 @@ Some objectives have been defined for \project:
 \begin{itemize}
 \item Simulate network devices (host, switch, router, nat, firewall) using LKL and afterwards simulate topologies having a great number of network devices (even thousands of network devices)
 \item Even though a not stated objective, \project has proven once again that when needing to reuse some already implemented features from the Linux kernel, LKL turns out to be a feasible solution.
-\item The topologies created using \project should be able to communicate with other, non-LKL, processes.
+\item Devices from the topology should be able to communicate with non-LKL processes
 \item \project should be easy to use
 \end{itemize}
 
@@ -38,11 +39,11 @@ If, and how these objectives were met during the \project development is the sub
 
 \subsubsection{Dynamips}
 Dynamips is an emulator written to emulate Cisco routers which runs on Linux, Windows and Mac OS X. It started as a project to emulate a Cisco 7200 but now supports  Cisco 3600, 3700 and 2600 series.
-Being an emulator, Dynamips acts like a real device but at a lower speed; the best performance one can get on a host is 1kbps\footnote{As stated on the project's homepage \url{http://www.ipflow.utc.fr/index.php/Cisco_7200_Simulator}}
-Below is a list of some characteristics of Dynamips:
+Being an emulator, Dynamips acts like a real device but at a lower speed; the best performance one can get on a host machine is 1kbps\footnote{As stated on the project's homepage \url{http://www.ipflow.utc.fr/index.php/Cisco_7200_Simulator}}
+Below are listed some characteristics of Dynamips:
 \begin{itemize}
 \item Dynamips requires a Cisco IOS image in order to emulate the devices 
-\item The number of network devices it can emulate is limited as it requires high memory and high processor usage
+\item The number of network devices Dynamips can emulate is limited as it requires high memory and high levels of  processor usage
 \item It can only emulate routers and no other devices and the routers emulated are exclusively Cisco routers
 \item The source code is licensed under the GNU GPL which grants rights to modify and redistribute the software
 \end{itemize}
@@ -52,10 +53,7 @@ Packet Tracer is a Cisco proprietary network simulation program used as a teachi
 
 Since it is a simulator, Packet Tracer utilizes only a small number of features found within the actual hardware running a current Cisco IOS thus being appropriate for learning purposes but not for realistic network simulations.
 It is a closed source program so that no modifications can be done to the devices.
+
 \subsubsection[Network Simulator ns-2]{Network Simulator ns-2\footnote{\url{http://www.isi.edu/nsnam/ns/}}}
 
-ns-2 is a discrete event simulator targeted to research. It provides substantial support for simulation of TCP, routing, and multicast protocols over wired and wireless networks. It is still an ongoing project and bugs are still discovered and fixed.
-\begin{comment}
-Ns(network simulator) is a discrete event network simulator used for networking research.
-\todo{Learn more about NS-2}
-\end{comment}
+ns-2 is a discrete event simulator targeted to research. It provides substantial support for simulation of TCP, routing, and multicast protocols over wired and wireless networks. It is still an ongoing project.

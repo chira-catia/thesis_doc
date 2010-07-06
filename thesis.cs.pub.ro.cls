@@ -232,6 +232,7 @@
 \newcommand{\figref}[1]{\hyperref[#1]{Figure~\ref{#1}}}
 \newcommand{\chapref}[1]{\hyperref[#1]{Chapter~\ref{#1}}}
 \newcommand{\secref}[1]{\hyperref[#1]{Section~\ref{#1}}}
+\newcommand{\subsecref}[1]{\hyperref[#1]{Subsection~\ref{#1}}}
 
 % command for inserting labeled figures
 % Usage: \fig{file}{label}{caption}
