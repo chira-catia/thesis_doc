@@ -117,7 +117,7 @@ data link level of the OSI model but there are network and physical layer switch
 Switching decisions are based on CAM table which stores a mapping between the source MAC addresses 
 of the arriving packets and the incoming interface for the packet. When a packet arrives, if its 
 MAC address is not stored in the CAM table then it is added, and then a search is done for finding 
-out on which interface the packet should be forwarded using as a key the destination MAC address. 
+out on which interface the packet should be forwarded using as a key the destination MAC address. If there is no matching for the destination address, the packet is forwarded on all the switch's ports except the incoming one.
 There is no way for storing MAC addresses in a hierarchical way in the CAM table, so that a search in 
 the CAM table is a flat one.     
 
@@ -202,15 +202,15 @@ A image showing how the hypervisor works is \figref{img:hypervisor}.
 \begin{center}
   \begin{table}[htb]
   \begin{center}
-  \begin{tabular}{ | l | l | l |}
+  \begin{tabular}{ | l | l | l | l |}
     \hline
-      Device & Medium & CLI\\ \hline
-      Router & LKL & yes \\ \hline
-      Switch & LKL & yes\\ \hline
-      Firewall & LKL & yes\\ \hline
-      NAT & LKL & yes\\ \hline
-      Hub & non-LKL & no\\ \hline
-      Bridge & non-LKL & no\\ 
+      Device & Medium & CLI & Configuration file\\ \hline
+      Router & LKL & yes & yes\\ \hline
+      Switch & LKL & yes & yes\\ \hline
+      Firewall & LKL & yes & yes\\ \hline
+      NAT & LKL & yes & yes\\ \hline
+      Hub & non-LKL & no & no\\ \hline
+      Bridge & non-LKL & no & yes\\ 
     \hline
   \end{tabular}
   \end{center}
