@@ -3,20 +3,37 @@
 
 \section[Linux Kernel Library]{Linux Kernel Library\footnote{For an extensive description of LKL see \cite{thesis}}}
 \label{sec:lkl}
-The Linux kernel is a complex project involving many contributors and a high number of high-quality lines of code (almost 8 million lines starting with Linux 2.6.34). Many attempts have been made to reusing parts of the Linux kernel code but due to the high coupling of the code, the time and effort necessary for decoupling it turned out to be a high discouragement. 
 
-Linux Kernel Library is a project started by Octavian Purdil\u{a} which permits applications to use code from the Linux kernel with little effort from the programmers.\textbf{LKL} can be easily integrated with a new application because it is implemented as a library and by linking it with the project one has access to the non-static Linux kernel functions. The library is obtained by compiling the Linux kernel(and some changes that were needed in order for this solution to work) with the needed kernel modules. 
+The Linux kernel is a complex project involving many contributors and a high number of high-quality lines 
+of code (almost 8 million lines starting with Linux 2.6.34). Many attempts have been made to reusing parts of 
+the Linux kernel code but due to the high coupling of the code, the time and effort necessary for decoupling 
+it turned out to be a high discouragement. 
+
+Linux Kernel Library is a project started by Octavian Purdil\u{a} which permits applications to use code from 
+the Linux kernel with little effort from the programmers. \textbf{LKL} can be easily integrated with a new 
+application because it is implemented as a library and by linking it with the project one has access to the 
+non-static Linux kernel functions. The library is obtained by compiling the Linux kernel(and some changes that 
+were needed in order for this solution to work) with the needed kernel modules. 
 
 %s-a facut portarea kernelului pt o noua arhitectura
 %modif facute in afara modulului in kernel au fost triviale(pag 68)
-\textbf{Linux Kernel Library} was implemented as a new architecture in the Linux kernel (namely lkl architecture). This solution was chosen so that any changes necessary for LKL to work would not interfere with Linux kernel code and so integration with later kernel versions would not require too much effort. One of the most important advantages of this implementation is that LKL can easily benefit from upgrades and bug fixing in the Linux kernel since little or no changes were made in other parts of the kernel. 
+\textbf{Linux Kernel Library} was implemented as a new architecture in the Linux kernel (namely the lkl architecture). 
+This solution was chosen so that any changes necessary for LKL to work would not interfere with Linux kernel code and 
+so integration with later kernel versions would not require too much effort. One of the most important advantages of 
+this implementation is that LKL can easily benefit from upgrades and bug fixing in the Linux kernel since little or 
+no changes were made in other parts of the kernel. 
 The architecture of LKL is presented in \figref{img:lkl-arch}.
 \fig[scale=0.5]{src/img/lkl.pdf}{img:lkl-arch}{LKL architecture}
 Following is a short description of the architecture components:
 \begin{itemize}
-\item \textbf{LKL System call API} offers a interface for the application to use in order to communicate with the Linux kernel, this interface is based on Linux system calls.
+\item \textbf{LKL System call API} offers a interface for the application to use in order to communicate with the Linux kernel, 
+this interface mimics the Linux system calls.
 \item \textbf{Linux kernel} is the Linux kernel from which code will be reused by the applications. 
-\item \textbf{Generic LKL Architecture} interacts with the application using native operations and a series of functions exported by LKL. These functions inform the Linux kernel of specific events. In order to port Linux on a new architecture primitives for \textit{memory management, thread support, interrupts, idle processor and time management} are needed. These primitives are implements using native operations (e.g. for thread support and the way it is implemented in LKL native operations for creating/deleting semaphores and for up and down operations on semaphores). 
+\item \textbf{Generic LKL Architecture} interacts with the application using native operations and a series of functions exported by LKL. 
+These functions inform the Linux kernel of specific events. In order to port Linux on a new architecture primitives for 
+\textit{memory management, thread support, interrupts, idle processor and time management} are needed. These primitives are 
+implements using native operations (e.g. for thread support and the way it is implemented in LKL native operations for 
+creating/deleting semaphores and for up and down operations on semaphores). 
 \item \textbf{LKL Environments} -native operations are medium-dependent; at present support for 4 environments is implemented:  POSIX, NT, NTK and APR. 
 \end{itemize}
 \begin{comment}
@@ -37,10 +54,10 @@ In order that a LKL application to use non-LKL resources drivers are needed. The
 \end{itemize}
 \item \textbf{Application specific driver} used only by specific applications that involve resources such as Ethernet interfaces, working with the disk, etc.
 \end{itemize}
-%\todo{read tavi's summary and thesis and write more}
+
 \subsection{Network driver}
 \label{sec:net-driver}
-In order that our network application works, an application-specific driver was needed -namely a network driver-. 
+In order that our network application work, an application-specific driver was needed -namely a network driver-. 
 The network driver is split into two separate components: a LKL component and a native one.
 
 The LKL component takes care of the interaction with the LKL kernel. It encapsulates
@@ -48,7 +65,8 @@ and decapsulates the packets for the kernel (encapsulates them in a struct sk_bu
 and the native part.
 
 The native component uses native syscalls to assure communication between two devices.
-It can use any inter-process communication primitives like pipes, mail queues, sockets, etc.For this implementation it was chosen to use sockets so that two devices on different computers could be connected.
+It can use any inter-process communication primitives like pipes, mail queues, sockets, etc.
+For this implementation it was chosen to use sockets so that two devices on different computers could be connected.
 The network driver was implemented at environment level and it offers an interface for creating/deleting interfaces.
 
 The way our interface driver works is presented in \figref{img:eth-driver}
@@ -62,57 +80,95 @@ The way our interface driver works is presented in \figref{img:eth-driver}
 \item The \textbf{router} is implemented using netlink interface and the routing subsystem.
 \item The \textbf{NAT} and \textbf{firewall} are implemented using ip_tables. 
 \end{itemize} 
-Besides these LKL-net devices, two additional devices were needed (non-LKL applications) for a proper functionality: a hub and a bridge device.
+Besides these LKL-net devices, two additional devices were needed (non-LKL applications) for proper functionality: a hub and a bridge device.
 
 The architecture of LKL-net is presented in \figref{img:lkl-net}.
 \fig[scale=0.5]{src/img/lkl-net.pdf}{img:lkl-net}{LKL-net architecture}
-There are LKL and non-LKL devices as stated above and for loading and starting devices as well as facilitating communication between them, a hypervisor was implemented. For usability reasons the LKL-net application provides a command line interface and a graphical user interface.
-In the next section it is presented a description of the implemented devices and \chapref{chapter:impl} goes into detail about both Linux kernel support and implementation aspects for the devices, hypervisor, CLI and GUI. 
+There are LKL and non-LKL devices as stated above and for loading and starting devices as well as 
+facilitating communication between them, a hypervisor was implemented. For usability reasons the LKL-net 
+application provides a command line interface and a graphical user interface.
+In the next section it is presented a description of the implemented devices and \chapref{chapter:impl} 
+goes into detail about both Linux kernel support and implementation aspects for the devices, hypervisor, CLI and GUI. 
 \section{Devices}
 \label{sec:devices}
 The purpose of \project was to simulate several network devices -routers, switches, firewalls, NATs- , but taking into account the fact that we wanted the LKL devices to be able to communicate with non-LKL processes, we were faced with the need to implement some non-LKL devices to serve this purpose and these are the hub and the bridge.
 
-Following is a brief description of these network decices, implementation details being discussed in a separate section,  \chapref{chapter:impl}-Implementation.
+Following is a brief description of these network devices, implementation details being discussed in a separate section,  \chapref{chapter:impl}-Implementation.
 \subsection{Router}
 \label{sub-sec:router}
-The router is the network device that connects two or more different networks. It is responsible for forwarding packets according to the routing table and its routing policies. Routes in the routing table are either static (added by the administrator) or dynamic, added using specific routing protocols such as RIP, OSPF, EIGRP, etc.
-Mainly routing decisions are taken based on IPv4 destination address, there are also other alternatives for taking routing decisions (such as routing based on source address) but since the destination address is frequently used, i will not go into details about the other alternatives. 
+The router is the network device that connects two or more different networks. It is responsible for 
+forwarding packets according to the routing table and its routing policies. Routes in the routing table 
+are either static (added by the administrator) or dynamic, added using specific routing protocols such as RIP, OSPF, EIGRP, etc.
+Mainly routing decisions are taken based on IPv4 destination address, there are also other alternatives for taking routing 
+decisions (such as routing based on source address) but since the destination address is frequently used, 
+i will not go into details about the other alternatives. 
 
 The way routing works is shown in \figref{img:routing}.
 \fig[scale=0.5]{src/img/routing-process.pdf}{img:routing}{Routing Actions}
-If the destination of the packet is not the router (the packet's destination address is different from the addresses of all router's interfaces) then a search is done in the routing table starting with the most specific route in order to find a matching route for the packet and forward it accordingly. If no matching route is found then the packet is discarded.
+If the destination of the packet is not the router (the packet's destination address is different from the 
+addresses of all router's interfaces) then a search is done in the routing table starting with the most 
+specific route in order to find a matching route for the packet and forward it accordingly. If no
+matching route is found then the packet is discarded.
 \subsection{Switch}
 \label{sub-sec:switch}
-The switch is a device that connects devices from the same network. Switches generally operate at data link level of the OSI model but there are network and physical layer switches as well. 
+The switch is a device that connects devices from the same network. Switches generally operate at 
+data link level of the OSI model but there are network and physical layer switches as well. 
 
-Switching decisions are based on CAM table which stores a mapping between the source MAC addresses of the arriving packets and the incoming interface for the packet. When a packet arrives, if its MAC address is not stored in the CAM table then it is added, and then a search is done for finding out on which interface the packet should be forwarded using as a key the destination MAC address. There is no way for storing MAC addresses in a hierarchical way in the CAM table, so that a search in the CAM table is a flat one.     
+Switching decisions are based on CAM table which stores a mapping between the source MAC addresses 
+of the arriving packets and the incoming interface for the packet. When a packet arrives, if its 
+MAC address is not stored in the CAM table then it is added, and then a search is done for finding 
+out on which interface the packet should be forwarded using as a key the destination MAC address. 
+There is no way for storing MAC addresses in a hierarchical way in the CAM table, so that a search in 
+the CAM table is a flat one.     
+
 \subsection{Firewall}
 \label{sub-sec:firewall}
-A firewall is a network device which can block or permit incoming or outgoing traffic based on a set of filtering rules. Its purpose is to allow only authorized traffic and to block unauthorized access. When a packet arrives, a search is made in the filtering table to find a rule for that particular packet, if no rule is found then the default rule will be applied, the default rule being to either permit or deny that packet. 
+A firewall is a network device which can block or permit incoming or outgoing traffic based on a set 
+of filtering rules. Its purpose is to allow only authorized traffic and to block unauthorized access.
+When a packet arrives, a search is made in the filtering table to find a rule for that particular packet, 
+if no rule is found then the default rule will be applied, the default rule being to either permit or deny 
+that packet. 
 
-Firewalls can operate at Network or Application OSI Layer and can be implemented in either hardware or software or a combination of these two.
+Firewalls can operate at Network or Application OSI Layer and can be implemented in either hardware or software 
+or a combination of these two.
  
 There are two types of firewalls depending on whether they store information about the connection status:
 \begin{enumerate}
-\item{\textbf{Stateless firewall}} watches network traffic and  allows or denies packets based on source or destination address or other static values(such as source or destination port). It has no knowledge about traffic patterns or data flows and no mechanism for storing connection states. A stateless firewall uses simple rule-sets and there is no mechanism for detecting unwanted access (such as a response packet for a TCP connection that was not previously initiated from the inside).
-\item{\textbf{Stateful firewall}} watches traffic streams and is aware of communication paths and the state in which a communication is (e.g. for TCP connection a stateful firewall is aware of the open, open sent, synchronized, synchronization acknowledge or established connection state). Stateful firewalls can implement IPsec functions such as tunneling and encryption.
+\item{\textbf{Stateless firewall}} watches network traffic and  allows or denies packets based on source or 
+destination address or other static values(such as source or destination port). It has no knowledge about 
+traffic patterns or data flows and no mechanism for storing connection states. A stateless firewall uses 
+simple rule-sets and there is no mechanism for detecting unwanted access (such as a response packet for a 
+TCP connection that was not previously initiated from the inside).
+\item{\textbf{Stateful firewall}} watches traffic streams and is aware of communication paths and the state 
+in which a communication is (e.g. for TCP connection a stateful firewall is aware of the open, open sent, 
+synchronized, synchronization acknowledge or established connection state). Stateful firewalls can implement 
+IPsec functions such as tunneling and encryption.
 \end{enumerate}
-Stateless firewalls are faster than stateful firewalls under intensive traffic whereas stateful firewalls can identify forged or unauthorized communication.
-Choosing between which type of firewall to use should take into account the network's requirements and priorities.  
+Stateless firewalls are faster than stateful firewalls under intensive traffic whereas stateful firewalls can 
+identify forged or unauthorized communication. Choosing between which type of firewall to use should take into 
+account the network's requirements and priorities.  
+
 \subsection{NAT}
 \label{sub-sec:nat}
-Due to the rapid development of the Internet and to the address-assigning policy (full-class address spaces, almost impossible to reuse previously assigned addresses), IANA was faced with the threaten of address exhaustion, which lead to the decision of reserving three blocks of the IP address space for private networks\footnote{For more on Address Allocation for Private Internets see \url{http://tools.ietf.org/html/rfc1918}}:
+Due to the rapid development of the Internet and to the address-assigning policy (full-class address spaces, almost impossible to reuse previously assigned addresses), IANA was faced with the threat of address exhaustion, which lead to the decision of reserving three blocks of the IP address space for private networks\footnote{For more on Address Allocation for Private Internets see \url{http://tools.ietf.org/html/rfc1918}}:
 \begin{itemize}
 \item10.0.0.0        -   10.255.255.255  (10/8 prefix)
 \item172.16.0.0      -   172.31.255.255  (172.16/12 prefix)
 \item192.168.0.0     -   192.168.255.255 (192.168/16 prefix)
 \end{itemize}
-These private addresses could be used by anyone with no charge but a drawback is that they could not be routed in the internet, so that in the case a packet having a private address as its destination reaches a router, it will be discarded. A mechanism for translating these private addresses to public ones was needed.
+These private addresses could be used by anyone with no charge but a drawback is that they could not be routed 
+in the internet, so that in the case a packet having a private address as its destination reaches a router, it 
+will be discarded. A mechanism for translating these private addresses to public ones was needed.
 
-NAT (Network address translation) is a mechanism for translating source or destination address of a packet thus enabling internet access to private networks. There are two different types of NAT:
+NAT (Network address translation) is a mechanism for translating source or destination address of a packet thus 
+enabling internet access to private networks. There are two different types of NAT:
 \begin{enumerate}
-\item \textbf{Basic NAT} refers to IP address translation only, NAT can change source address(SNAT) or destination address(DNAT). When using Basic NAT there is a one-to-one relation between the address being translated and the translated one so that basic NAT can be seen as a solution for internet access for private networks and not as a solution for address exhaustion.
-\item \textbf{PAT} refers to both IP address and port translation, when referring to NAT one usually implies PAT.The relation between addresses being translated and the translation addresses is many-to-many or even many-to-one.
+\item \textbf{Basic NAT} refers to IP address translation only, NAT can change source address(SNAT) 
+or destination address(DNAT). When using Basic NAT there is a one-to-one relation between the address 
+being translated and the translated one so that basic NAT can be seen as a solution for internet access 
+for private networks and not as a solution for address exhaustion.
+\item \textbf{PAT} refers to both IP address and port translation, when referring to NAT one usually implies 
+PAT.The relation between addresses being translated and the translation addresses is many-to-many or even many-to-one.
 
 An example of PAT is presented in \figref{img:nat}.
 \fig[scale=0.4]{src/img/nat.pdf}{img:nat}{PAT}
@@ -121,14 +177,23 @@ An example of PAT is presented in \figref{img:nat}.
 \label{sub-sec:auxdev}
 
 \subsubsection{Hub}
-The hub is a physical layer network device which connects multiple network devices; when receiving a packet on a port, the hub transmits it to all the devices on all the ports except the one on which it came. When a packet is transmitted no fields of it are investigated, the hub is responsible only for retransmitting the packet without any further checking.
+The hub is a physical layer network device which connects multiple network devices; when receiving a packet 
+on a port, the hub transmits it to all the devices on all the ports except the one on which it came. When a 
+packet is transmitted no fields of it are investigated, the hub is responsible only for retransmitting the packet 
+without any further checking.
 
-There are several uses of a hub: due to the way they operate, hubs are often used as repeaters; also they can be used in specific topologies where the time to forward packets is critical or if the applications would not benefit from using a switch instead of a hub. If a traffic analyzer is needed, a hub could be used as well, connecting the device responsible for the investigation to the hub.
+There are several uses of a hub: due to the way they operate, hubs are often used as repeaters; also they can be 
+used in specific topologies where the time to forward packets is critical or if the applications would not benefit 
+from using a switch instead of a hub. If a traffic analyzer is needed, a hub could be used as well, connecting 
+the device responsible for the investigation to the hub.
 \subsubsection{Bridge}
-This device is responsible for connecting two different physical mediums. In LKL it connects non-LKL processes to LKL ones so that the LKL devices are not separated from the non-LKL world.
+This device is responsible for connecting two different physical mediums. In LKL it connects non-LKL processes to 
+LKL ones so that the LKL devices are not separated from the non-LKL world.
 \section{Hypervisor}
 \label{sub-sec:hypervisor}
-The hypervisor is a non-LKL application used to control a topology. It is also used to give devices information about other devices (e.g. the port on which a hub-given by its name- runs) or to send commands to the devices. The hypervisor can be run using the CLI or the GUI.
+The hypervisor is a non-LKL application used to control a topology. It is also used to give devices information 
+about other devices (e.g. the port on which a hub-given by its name- runs) or to send commands to the devices. 
+The hypervisor can be run using the CLI or the GUI.
 
 A image showing how the hypervisor works is \figref{img:hypervisor}. 
 \fig[scale=0.5]{src/img/hypervisor}{img:hypervisor}{LKL-net Hypervisor}
