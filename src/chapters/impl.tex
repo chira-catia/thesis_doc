@@ -1,8 +1,8 @@
-\chapter{Implementation}
+\chapter[Implementation]{Implementation\footnote{The source files of \project can be found at\url{http://github.com/sorindumitru/lkl-net}}}
 \label{chapter:impl}
-In the following chapter there will be described two of the devices implemented in \project(router and NAT) as well as an auxiliary device(hub). For each of the devices the support offered by the Linux Kernel will be presented, the method chosen to implement each device and, in the end, the results of some tests which prove that the devices work as intended.
+In the following chapter two of the devices implemented in \project(router and NAT) will be described as well as an auxiliary device(hub). For each of these devices the support offered by the Linux Kernel will be presented, the method chosen to implement each device and, in the end, the results of some tests which prove that the devices work as intended.
 
-\section[Router]{Router\footnote{for more on this subject see \cite{linnetarch}}}
+\section[Router]{Router\footnote{For more on this subject see \cite{linnetarch}}}
 \label{sec:router-impl}
 
 \subsection{Linux support}
@@ -13,8 +13,8 @@ In order to configure a device to act as a router, forwarding must be enabled. I
 For enabling forwarding in Linux the kernel variable IP_FORWARD must be set to one. There is more than one way to probe or modify IP_FORWARD's value:
 \renewcommand{\theenumi}{\alph{enumi}}
 \begin{enumerate}
-\item Through the ip_forward file in the /proc/sys/net/ipv4 directory. To find out or to modify IP_FORWARD's value this file can be read from or written to; also, the _sysctl() system call and the sysctl command can be used to achieve the same result 
-\item Reading or writing directly the kernel variable IP_FORWARD. 
+\item Through the ip_forward file in the /proc/sys/net/ipv4 directory. To read or to modify IP_FORWARD's value this file can be read from or written to; also, the _sysctl() system call and the sysctl command can be used to achieve the same result. 
+\item Reading or writing directly the IP_FORWARD kernel variable. 
 \end{enumerate}
 \renewcommand{\theenumi}{\arabic{enumi}}
 %removed add/remove interface because there is no support except adding new NIC
@@ -23,37 +23,39 @@ For enabling forwarding in Linux the kernel variable IP_FORWARD must be set to o
 After forwarding activation, the next step for configuring a router is adding routes based on which the routing decisions will be taken. Usually route selection is based on the destination address from the packet header but starting with Linux version 2.4 more routing tables are available which allow the use of other criteria for the routing process such as source address. The selection of which table to use for which packets is based in this case on a supplemental set of rules.
 
 In the Linux kernel, routing tables are represented by rather complex data structures, which manage entries by using a number of hash tables for different prefix lengths. A easier way to communicating with the kernel is through the Netlink interface{\footnote{See RFC3549 \url{http://tools.ietf.org/html/rfc3549}} which uses netlink sockets.
-The netlink message is used to communicate between user space and kernel,each of which registers for specific messages of interest for processing or monitoring purposes; its format is shown below:
-%\begin{lstlisting}
-%the message structure was here
-%\end{lstlisting}
+The netlink message is used to communicate between user space and kernel,each of which registers for specific messages of interest for processing or monitoring purposes; its format is shown in \figref{img:netlinkmsg}:
 \fig[scale=0.5]{src/img/netlinkmessage.pdf}{img:netlinkmsg}{Netlink Message Structure}
 
 The Netlink message header is generic for all services whereas IP Service Template is specific to a service and IP Service specific data is the unique data carried between the two socket ends having a Type-Length-Value format. A thorough description of these netlink fields can be found in RFC3549 {\footnote{\url{http://tools.ietf.org/html/rfc3549}}.
 
-Netlink address family uses the same API as the BSD sockets. In order for the communication to be possible, a call to socket system call it is needed:
+Netlink address family uses the same API as the BSD sockets. In order for the communication to be possible, a call to socket system call is needed:
 \begin{lstlisting}
 socket fd=socket(AF_NETLINK,SOCK_RAW,protocol);
 \end{lstlisting}
-where the address family and type are always AF_NETLINK and SOCK_RAW. There are several protocols that can be specified such as NETLINK_ROUTE, NETLINK_ARPD, NETLINK_FIREWALL.
-Netlink sockets are connectionless and the messages are transmitted using datagrams so that the receiving of a packet cannot be guaranteed.
+where the address family and type are always AF_NETLINK and SOCK_RAW. There are several protocols that can be specified such as NETLINK_ROUTE, NETLINK_ARPD and NETLINK_FIREWALL.
+Netlink sockets are connectionless and the messages are transmitted using datagrams so the receiving of a packet cannot be guaranteed.
 
-The NETLINK_ROUTE protocol has the largest scope from all netlink protocols and allows user space programs to modify the IPv4 routing tables as well as receive routing updates and collecting statistics. It makes use of  different message types which can be divided in separate message families that address a specific aspect of the Linux kernel network system. In general all this families contain three message types: RTM_NEW\textit{FAMILY_NAME} for adding new data, RTM_DEL\textit{FAMILY_NAME}-for deleting data and RTM_GET\textit{FAMILY_NAME} for retrieving data from the kernel.
+The NETLINK_ROUTE protocol has the largest scope from all netlink protocols and allows user space programs to modify the IPv4 routing tables as well as receive routing updates and collecting statistics. It makes use of  different message types which can be divided in separate message families that address a specific aspect of the Linux kernel network system. In general all this families contain three message types: RTM_NEW\textit{FAMILY_NAME} for adding new data, RTM_DEL\textit{FAMILY_NAME} for deleting data and RTM_GET\textit{FAMILY_NAME} for retrieving data from the kernel.
 \begin{itemize}
 \item{\bf LINK} gives access to interface specific data
 \item{\bf ADDR} used to manipulate network addresses on network interfaces
 \item{\bf ROUTE} for managing the IPv4 route table
-\item{\bf NEIGHBOURS}
-\item{\bf RULES}
-\item{\bf DISCIPLINES}
+\item{\bf NEIGH} for adding, removing, or receiving information about a neighbor table entry (e.g., an ARP entry or an IPv4 neighbor solicitation, etc.)
+\item \textbf{Traffic Control Service} provides the ability to provision, query or listen to
+   events under the auspices of traffic control.  These include queuing
+   disciplines, (schedulers and queue treatment algorithms -- e.g.,
+   priority-based scheduler or the RED algorithm) and classifiers. It makes use of three message families:
+\begin{itemize} 
+\item{\bf QDISC}
 \item{\bf CLASSES}
 \item{\bf FILTERS}
+\end{itemize}
 \end{itemize} 
 
 \subsection{\project implementation}
 \label{sub-sec:router-lklnet}
 \subsubsection{Enable forwarding}
-We decided to enable forwarding by writing the ip_forward file. My decision was based on the fact that IP_FORWARD was hard to find, being almost concealed inside a structure. At the same time the probability that these complex structures from the network component of the kernel may change in the near future is very high. All in all enabling forwarding this way seems at present the most reliable solution.
+We decided to enable forwarding by writing the ip_forward file. This decision was based on the fact that the IP_FORWARD kernel variable was hard to find, being almost concealed inside a structure. At the same time the probability that these complex structures from the network component of the kernel may change in the near future is very high. All in all enabling forwarding this way seems at present the most reliable solution.
 Before writing the ip_forward file the procfs filesystem needed to be mounted in the LKL kernel. 
 
 \subsubsection{Add/Remove interface}
@@ -71,8 +73,7 @@ The route support was implemented using the Netlink Interface specifically the R
 The structure that represents the netlink message header is struct nlmsghdr:
 \lstset{language=C, caption=Netlink Message Header Structure}
 \lstinputlisting{src/code/impl/nlmsghdr.c}
-For adding or removing a route, the nlmsg_flags equals NLM_F_REQUEST|NLM_F_CREATE|NLM_F_EXCL; for adding a route nlmsg_type is RTM_NEWROUTE and for deleting a rule its value is RTM_DELROUTE.
-The nlmsg_type field specifies 
+For adding or removing a route, the nlmsg_flags equals NLM_F_REQUEST|NLM_F_CREATE|NLM_F_EXCL; for adding a route nlmsg_type is RTM_NEWROUTE and for deleting a rule its value is RTM_DELROUTE. 
 The structure representing the Service Message Template is struct rtmsg:
 \lstset{language=C, caption=Service Message Template Structure}
 \lstinputlisting{src/code/impl/structrtmsg.c}
@@ -82,10 +83,11 @@ Subsequent to filling the netlink message, a socket must be created, data transm
 \lstinputlisting{src/code/impl/addroute.c}  
 
 %this should appear at the end of this section
-To add a new route one must specify network_address and netmask as well as the outgoing interface.
+In order to add or delete a new route one must specify network_address and netmask, the outgoing interface and the address of the next hop (if there is no next hop the address of the outgoing router interface must be specified).
 \lstset{language=TeX,caption=Adding a new interface,label=lst:saddrule}
 \begin{lstlisting}
-add <network_address/netmask> <interface_name> 
+add <network_address/netmask> <interface_name> <next hop address>
+remove <network_address/netmask> <interface_name> <next hop address>
 \end{lstlisting}  
 This command calls the LKL function {\bf lkl_add_route} which uses netlink sockets for adding the new route.
 
@@ -97,10 +99,10 @@ For putting router interfaces up or down and for listing the active interfaces o
 
 In this section a proof of concept application will be presented that shows the router capabilities of forwarding traffic based on the routing table. 
 
-We built a small topology consisting of three routers that will help us tests the functions of the router.
-\fig[scale=0.5]{src/img/routers.png}{img:routers}{Router test}
+We built a small topology (shown in \figref{img:routers}) consisting of three routers that will help us test the functions of the router.
+\fig[scale=0.5]{src/img/routers.png}{img:routers}{Topology for testing router capabilities}
 
-After the devices are started, static routes will be added to the routers. Two LKL applications will then be connected to routers R2 and R3 to see if there is connectivity between them. The applications are instances of a simple LKL test application used to create hosts; in order to configure a host the following must be specified: 
+After the devices are started, static routes will be added to the routers. Two LKL applications will then be connected to routers R2 and R3 to see if there is connectivity between them. The applications connected to these routers are instances of a simple LKL test application used to create hosts; in order to configure a host the following must be specified: 
 \begin{lstlisting}
   -a, --address=IPv4 address -IPv4 address for the LKL interface
   -n, --netmask-length=int   -IPv4 netmask length for the LKL interface
@@ -117,7 +119,7 @@ After the devices are started, static routes will be added to the routers. Two L
   -t, --to=Destination IPv4 address
                              IPv4 destination
 \end{comment}
-In order to test the above topology, we created a client-server test-application(test.c); for specifying which role a host will have the following option must be present when running the program:
+In order to test the above topology, we created a client-server test-application; for specifying which role a host will have the following option must be set when running the program:
 \begin{lstlisting}
 -r, --role=string   This option can be either server or client. If the host will act as a client in the communication then the address of the server must be specified using the -t option:
 -t, --to=Destination IPv4 address Specify the server destination address.
