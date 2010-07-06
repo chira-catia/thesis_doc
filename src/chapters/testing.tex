@@ -4,7 +4,7 @@
 \section{Round Trip Time and Throughput}
 \label{sec:rt-troughput}
 
-In order to test the Response Time for a LKL device we have chosen the router and built a simple topology shown below:
+In order to test the Response Time for a LKL device we have chosen the router and built a simple topology shown in \figref{img:throughput}:
 \fig[scale=0.5]{src/img/throughput.png}{img:throughput}{Topology for testing Response Time and Throughput}
 \begin{center}
   \begin{table}[htb]
@@ -17,19 +17,19 @@ In order to test the Response Time for a LKL device we have chosen the router an
     \hline
   \end{tabular}
   \end{center}
-  \caption{Topology description}
+  \caption{Throughput topology description}
   \label{table:resp-time}
   \end{table}
 \end{center}
 
 
-For injecting traffic in the topology a bridge was connected to the hub and a route to the router's interface was added via tap0. In order for the bridge to connect to the hub, a configuration file is passed as a command line argument when running it for specifying the port and system address where the hub runs.
+For injecting traffic in the topology a bridge was connected to the hub and a route to the router's interface was added via tap0. In order for the bridge to connect to the hub, a configuration file is passed as a command line argument when running it for specifying the port and the system's address where the hub runs.
 The  configuration file is: 
 \lstset{language=TeX, caption=Bridge configuration file}
 \lstinputlisting{src/code/bridge/bridge-config}
-For starting the bridge, root permissions are needed in order to create the tap interface.
-The commands for setting the bridge, after starting it are:
-\lstset{language=TeX,caption=Commands for configuring the bridge,label=test-bridge-config}
+For starting the bridge, root rights are needed in order to create the tap interface.
+The commands for setting the tap interface, after starting the bridge are:
+\lstset{language=TeX,caption=Commands for configuring the tap interface,label=test-bridge-config}
 \begin{lstlisting}
 Setting the tap interface up: sudo ip link set tap0 up
 Setting an IPv4 address on the new created tap interface: sudo ip addr add 192.168.100.100/24 dev tap0
@@ -70,30 +70,30 @@ for a 1400B packet size. There is no significant difference for the average,maxi
 \item \textbf{Exponential Weighted Moving Average}\footnote{\url{http://en.wikipedia.org/wiki/Moving_average_(finance)#Exponential_moving_average}} During operations, the effective idletime is measured using an exponential weighted moving average (EWMA), which considers recent packets to be exponentially more important than past ones. 
 
 \item \textbf{Throughput} is defined as the average rate of successful message delivery over a communication channel. Its measurement unit is either bps (bits per second) or packets per second.
-I have decided to compute the \textbf{throughput} based on the RTT as 2*1000/RTT which issues a throughput value of \approx 150 packets per second. 
+I have decided to compute the \textbf{throughput} based on the RTT as 2*1000/RTT which issues a throughput value of \approx 150 packets per second. It was noticed that during ping the number of context switches was higher by 2000-3000 context switches denoting that the low rate of packets per second is due to latency induced by the high number of context swithes. 
 \end{itemize}
 \section{Scalability}
 \label{sec:scalability}
 
-In order to test how scalable a router is, i have tested the memory it requires for different load levels varying the number of routes and the number of NAT and Firewall rules.
+In order to test how scalable a router is, we have tested the memory it requires for different load levels obtained by varying the number of routes and the number of NAT and Firewall rules.
 \figref{img:routes-used-mem} presents the results obtained by varying the number of routes.
 \fig[scale=0.4]{src/img/routes-mem.png}{img:routes-used-mem}{Required Memory by Routes}
-As it can be seen the memory needed varies almost linear with the number of rules, 1000 more rules requiring 2 or 3 MB.
+As it can be seen the memory needed varies almost linear with the number of rules, 1000 more rules requiring 2 or 3 MB more.
 
-During these tests i have tested as well, how the time to forward packets is influenced by the number of routes in the route table using the topology presented in \figref{img:routes-forward}, where routes were added on Router0, a server was connected to Hub2 and a client connected to Hub0. The time for receiving the server response was only slightly different with the increase of routes number, proving that the route was already in cache.
+During these tests we have tested as well how the time to forward packets is influenced by the number of routes in the route table using the topology presented in \figref{img:routes-forward}, where routes were added on Router0, a server was connected to Hub2 and a client was connected to Hub0. The time for receiving the server response was only slightly different with the increase of routes number, proving that the route was already in cache.
 \fig[scale=0.4]{src/img/routes-forward.png}{img:routes-forward}{Topology for testing Necessary Time to Search Routing Table}
 
 When testing how the increase of NAT and Firewall rules influences memory use, the results were almost similar for NAT and Firewall rules since they both are represented as ipt_entry structures.\figref{img:nat-used-mem} illustrates these results.
 \fig[scale=0.4]{src/img/nat-firewall-mem.png}{img:nat-used-mem}{Required Memory by NAT and Firewall Rules}
 
-I have tested as well CPU load due to a running router connecting a bridge to interface eth0 of Router0 from the topology presented in \figref{img:routes-forward} and pinging the router interface using the following command
+I have tested as well CPU load due to a running router connecting a bridge to the interface eth0 of the Router0 from the topology presented in \figref{img:routes-forward} and pinging the router interface using the following command
 \lstset{language=TeX,caption=Commands for configuring the bridge,label=test-bridge-config}
 \begin{lstlisting}
 sudo ping 10.10.10.10 -f
 \end{lstlisting}
 and the highest load was 4\%.
 
-Below is a table showing the memory requirements of Hub and Router devices for different loads:
+Below is a table showing the memory requirements due to Hub and Router devices for different loads:
 \begin{center}
   \begin{table}[htb]
   \begin{center}
@@ -115,11 +115,15 @@ Below is a table showing the memory requirements of Hub and Router devices for d
 \section{Complex Topologies}
 \label{sec:complex-top}
 After doing tests on simple topologies the logical next step was to test the behaviour of \project devices when used for more complex topologies. 
+
 The scenario for this simulation was a basic one: we wanted to be able to access a web page (lklnet.org -a nonexistent page that we built) using an existing browser(such as Chrome, Mozilla,etc) and be able, at the same time to sniff the network traffic in order to see packets exchanged to fulfil the request for the page.
-In order to achieve these topology requests we needed to connect some external application to the \project devices: the web browser used on the localhost, a dns server and a web server both virtual machines; all the external applications were connected using the bridge.  
+
+In order to achieve these topology requirements we needed to connect some external application to the \project devices: the web browser used on the localhost, a dns server for resolving the request for the web page and a web server on which the webpage resides. Both of the servers are virtual machines.
+All the external applications were connected in the topology using the bridge.  
 The topology we built is shown in \figref{img:web}.
 \fig[scale=0.4]{src/img/web.png}{img:web}{Complex Topology Simulation}
-The router and switch configuration is:
+
+The router configuration is presented in \tableref{table:complex-router}
 \begin{center}
   \begin{table}[htb]
   \begin{center}
@@ -131,11 +135,11 @@ The router and switch configuration is:
     \hline
   \end{tabular}
   \end{center}
-  \caption{Router config}
+  \caption{Complex topology:Router configuration}
   \label{table:complex-router}
   \end{table}
 \end{center}
-
+The switch configuration is shown in \tableref{table:complex-switch}
 \begin{center}
   \begin{table}[htb]
   \begin{center}
@@ -148,21 +152,22 @@ The router and switch configuration is:
     \hline
   \end{tabular}
   \end{center}
-  \caption{Switch config}
+  \caption{Complex topology:Switch configuration}
   \label{table:complex-switch}
   \end{table}
 \end{center}
 Besides the already connected bridges one additional one was connected between the switch and router to allow the traffic sniff.
-After issuing the request form the webpage, the following actions taken in order to satisfy the request can be observed, and the page will be shown in the browser:
+
+After issuing the request for the webpage, several actions are taken in order to fulfill the request and in the end the webpage is shown in the browser.
+The actions needed to retrieve the requested webpage are listed below:
 \begin{itemize}
-	\item ARP request is made for the DNS server address
-	\item Switches broadcasts the packet
-	\item ARP response from the DNS server
-	\item DNS request from the web browser
-	\item DNS response from the DNS server
-	\item TCP connection
-	\item Web page request
-	\item Web page response
+	\item Make an ARP request for the DNS server address: switches broadcast the arp request packet and eventually an ARP Response is received from the DNS server
+	\item The web browser issues a  DNS request for lklnet.org
+	\item A DNS response is received from the DNS server specifying the IPv4 address of the webserver.
+	\item Initiate TCP connection to the web server
+	\item The web browder initiates a web page request
+	\item The web page response is received from the web server
 	\item TCP hangup
 \end{itemize}
+The packets exchanged during these actions can be seen using tcpdump tool connected to one or more of the bridges.
 
