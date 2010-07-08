@@ -4,7 +4,7 @@
 \section{Project Description}
 \label{sec:proj}
 
-\project is an application built using Linux kernel library (a description of LKL can be found in \secref{sec:lkl}) with the purpose of implementing network devices such as router, switch, nat, firewall, hub by reusing the TCP/IP stack from the Linux kernel so that in the end every device will offer a full TCP/IP stack. Since being built using LKL, \project will benefit from enhancements made in the TCP/IP stack from the Linux kernel.
+\project is an application built using Linux kernel library (a description of LKL can be found in \secref{sec:lkl}) with the purpose of implementing network devices such as router, switch, nat, firewall and hub by reusing the TCP/IP stack from the Linux kernel so that in the end every device will offer a full TCP/IP stack. Since being built using LKL, \project will benefit from the enhancements made in the TCP/IP stack from the Linux kernel.
 
 The purpose of this project is firstly to simulate very complex topologies and, secondly to not be isolated from non-LKL world.
 It was intended for \project to be able to communicate with non-LKL processes so that it can benefit from the usage of some tools. Throughout the \project development this feature was of a great aid for testing the behaviour of devices(ping and wireshark were frequently used). 
@@ -14,7 +14,7 @@ Besides the devices implemented by using LKL, two more devices (built as standar
 Network topologies can be defined using configuration files and, but not mandatory, a GUI. The entire topology is controlled by a hypervisor which boots the devices, saves changes done in the topology and communicates with the devices in order to send them information about the topology.
 
 Every LKL network device is a new LKL instance which has a reserved memory space of 16MB RAM.
-Implementation details, configuration file examples and the associated syntax are given in \chapref{chapter:impl} and in \chapref{ch:config-file}.
+Implementation details, configuration file examples and the associated syntax are given in \chapref{chapter:impl} and in Appendix  \ref{ch:config-file}.
 \subsection{Project Scope}
 \label{sub-sec:proj-scope}
 Simulators come with a great advantage over real network devices that is the possibility of constructing very complex topologies in a short time at a much lower cost. Simulators have a very similar behaviour to real-world topologies thus being a perfect tool for educational and research purposes. Obviously there are some disadvantages as well, such as lower performance levels than real network devices and the fact that after all they are only simulating topologies.
@@ -28,7 +28,7 @@ The way \project is built enables researches to test new network protocols by im
 Some objectives have been defined for \project:
 \begin{itemize}
 \item Simulate network devices (host, switch, router, nat, firewall) using LKL and afterwards simulate topologies having a great number of network devices (even thousands of network devices)
-\item Even though not a stated objective, \project has proven once again that when needing to reuse some already implemented features from the Linux kernel, LKL turns out to be a feasible solution.
+%\item Even though not a stated objective, \project has proven once again that when needing to reuse some already implemented features from the Linux kernel, LKL turns out to be a feasible solution.
 \item Devices from the topology should be able to communicate with non-LKL processes
 \item \project should be easy to use
 \end{itemize}
@@ -39,11 +39,11 @@ If, and how these objectives were met during the \project development is the sub
 
 \subsubsection{Dynamips}
 Dynamips is an emulator written to emulate Cisco routers which runs on Linux, Windows and Mac OS X. It started as a project to emulate a Cisco 7200 but now supports  Cisco 3600, 3700 and 2600 series.
-Being an emulator, Dynamips devices act like real devices but at a lower speed; the best performance one can get on a host machine is 1kpps\footnote{As stated on the project's homepage \url{http://www.ipflow.utc.fr/index.php/Cisco_7200_Simulator}}
+Being an emulator, Dynamips devices act like real devices but at a lower speed; the best performance one can get on a host machine is 1kpps\footnote{As stated on the project's homepage \url{http://www.ipflow.utc.fr/index.php/Cisco_7200_Simulator}}.
 Below are listed some characteristics of Dynamips:
 \begin{itemize}
 \item Dynamips requires a Cisco IOS image in order to emulate the devices 
-\item The number of network devices Dynamips can emulate is limited as it requires high memory and high levels of  processor usage
+\item The number of network devices Dynamips can emulate is limited as it requires high memory and has a high CPU load
 \item It can only emulate routers and no other devices and the routers emulated are exclusively Cisco routers
 \item The source code is licensed under the GNU GPL which grants rights to modify and redistribute the software
 \end{itemize}
@@ -58,4 +58,4 @@ It is a closed source program so that no modifications can be done to the device
 
 \subsubsection[Network Simulator ns-2]{Network Simulator ns-2\footnote{\url{http://www.isi.edu/nsnam/ns/}}}
 
-ns-2 is a discrete event simulator targeted to research. It provides substantial support for simulation of TCP, routing, and multicast protocols over wired and wireless networks. It is still an ongoing project.
+ns-2 is a discrete event simulator targeted to research. It provides substantial support for simulation of TCP, routing and multicast protocols over wired and wireless networks. It is still an ongoing project.

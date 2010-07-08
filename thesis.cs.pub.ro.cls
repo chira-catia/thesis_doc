@@ -43,12 +43,12 @@
 \usepackage{hyperref}
 \hypersetup{%
 	colorlinks=true,
-	linkcolor=blue,
+	linkcolor=black,
 	anchorcolor=black,
 	citecolor=black,
-	filecolor=blue,
+	filecolor=black,
 	menucolor=black,
-	urlcolor=blue,
+	urlcolor=black,
 	bookmarks=true,
 	bookmarksnumbered=true
 }
@@ -234,7 +234,7 @@
 \newcommand{\secref}[1]{\hyperref[#1]{Section~\ref{#1}}}
 \newcommand{\subsecref}[1]{\hyperref[#1]{Subsection~\ref{#1}}}
 \newcommand{\tableref}[1]{\hyperref[#1]{Table~\ref{#1}}}
-
+\hyphenation{network RTM_GETFAMILY_NAME}
 % command for inserting labeled figures
 % Usage: \fig{file}{label}{caption}
 %   TODO: references should point to the top of the image

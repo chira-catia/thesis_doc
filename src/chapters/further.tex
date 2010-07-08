@@ -5,7 +5,7 @@ In order for this project to be easier to use and to serve its purposes better t
 \subsubsection{Scenario replay}
 \label{sec:scenario-replay}
 Such a feature can be useful both for educational purposes (replaying the scenario at lower speeds could give students 
-the opportunity to better understand what happens in the given topology) as well as for research ones. Having the hub as a 
+a better insight into networking) as well as for research ones. Having the hub as a 
 device connector makes this task not too hard to implement because all packets that flow in a LKL topology pass through a hub. 
 Thus the hub can save the packets it receives and forward them at a later time. At the same time, packet investigation or even
 packet changing could be done by the hub or these tasks could be done by some other application to which the hub would pass the 
@@ -16,14 +16,12 @@ packets it receives. At present the hub prints the header of ARP and IPv4 packet
 One of the purposes of Linux kernel library is to be used in many different environments. In the current version of \project the 
 network driver is implemented only for Linux, so in order to be able to run LKL-net programs on a system running an 
 OS different from Linux the network driver should be implemented for other environments.
-The other tools used (readline library, flex, gtk) are platform independent.%\todo{say this better}
 
 \subsubsection{Physical layer simulation}
 \label{sec:physica-sim}
 This feature would enable packet transmission at different speeds and thus observing the way the 
 topology acts at those speeds. Since the hub interconnects each two LKL devices, it could forward 
-packets at different speeds if delay is necessary. 
-
+packets at different speeds.
 \subsubsection{Configuration of a routing protocol}
 \label{sec:routing-prot}
 Configuring static routes can be a time-consuming task for complex, frequently changing topologies so that 
@@ -31,7 +29,7 @@ being able to configure a routing protocol would make simulating complex topolog
 testing different scenarios would require less time to configure. The time gained from dynamically adding routes in 
 the routing table could then be used for other more useful purposes.
 
-This task could be done by porting \textbf{Zebra}\footnote{The website is \url{http://www.zebra.org/}} to LKL-net. Gnu Zebra is a software that manages TCP/IP routing protocols offering support for  RIPv1, RIPv2, OSPFv2 and BGP-4 routing protocols.
+This task could be done by porting \textbf{Zebra}\footnote{The website is \url{http://www.zebra.org/}} to LKL-net. GNU Zebra is a software that manages TCP/IP routing protocols offering support for  RIPv1, RIPv2, OSPFv2 and BGP-4 routing protocols.
 
 \subsubsection{Communication between multiple hypervisors}
 \label{sec:hypervisor-comm}

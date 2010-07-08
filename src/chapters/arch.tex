@@ -4,7 +4,7 @@
 \section[Linux Kernel Library]{Linux Kernel Library\footnote{For an extensive description of LKL see \cite{thesis}}}
 \label{sec:lkl}
 
-The Linux kernel is a complex project involving many contributors and a high number of high-quality lines 
+The Linux kernel is a complex project involving many contributors and a great number of high-quality lines 
 of code (almost 8 million lines starting with Linux 2.6.34). Many attempts have been made to reusing parts of 
 the Linux kernel code but due to the high coupling of the code, the time and effort necessary for decoupling 
 it turned out to be a high discouragement. 
@@ -57,7 +57,7 @@ In order that a LKL application to use non-LKL resources drivers are needed. The
 
 \subsection{Network driver}
 \label{sec:net-driver}
-In order that our network application work, an application-specific driver was needed -namely a network driver-. 
+For our network application to be able to use the networking subsystem, an application-specific driver was needed, namely a network driver. 
 The network driver is split into two separate components: a LKL component and a native one.
 
 The LKL component takes care of the interaction with the LKL kernel. It encapsulates
@@ -91,7 +91,7 @@ In the next section it is presented a description of the implemented devices and
 goes into detail about both Linux kernel support and implementation aspects for the devices, hypervisor, CLI and GUI. 
 \section{Devices}
 \label{sec:devices}
-The purpose of \project was to simulate several network devices -routers, switches, firewalls, NATs- , but taking into account the fact that we wanted the LKL devices to be able to communicate with non-LKL processes, we were faced with the need to implement some non-LKL devices to serve this purpose and these are the hub and the bridge.
+The purpose of \project was to simulate several network devices (routers, switches, firewalls, NATs) , but taking into account the fact that we wanted the LKL devices to be able to communicate with non-LKL processes, we were faced with the need to implement some non-LKL devices to serve this purpose and these are the hub and the bridge.
 
 Following is a brief description of these network devices, implementation details being discussed in a separate section,  \chapref{chapter:impl}-Implementation.
 \subsection{Router}
@@ -101,10 +101,10 @@ forwarding packets according to the routing table and its routing policies. Rout
 are either static (added by the administrator) or dynamic, added using specific routing protocols such as RIP, OSPF, EIGRP, etc.
 Mainly routing decisions are taken based on IPv4 destination address, there are also other alternatives for taking routing 
 decisions (such as routing based on source address) but since the destination address is frequently used, 
-i will not go into details about the other alternatives. 
+we will not go into details about the other alternatives. 
 
 The way routing works is shown in \figref{img:routing}.
-\fig[scale=0.5]{src/img/routing-process.pdf}{img:routing}{Routing Actions}
+\fig[scale=0.5]{src/img/routing-process.pdf}{img:routing}{Routing actions}
 If the destination of the packet is not the router (the packet's destination address is different from the 
 addresses of all router's interfaces) then a search is done in the routing table starting with the most 
 specific route in order to find a matching route for the packet and forward it accordingly. If no
@@ -112,9 +112,9 @@ matching route is found then the packet is discarded.
 \subsection{Switch}
 \label{sub-sec:switch}
 The switch is a device that connects devices from the same network. Switches generally operate at 
-data link level of the OSI model but there are network and physical layer switches as well. 
+data link layer of the OSI model but there are network and physical layer switches as well. 
 
-Switching decisions are based on CAM table which stores a mapping between the source MAC addresses 
+Switching decisions are based on the CAM table which stores a mapping between the source MAC addresses 
 of the arriving packets and the incoming interface for the packet. When a packet arrives, if its 
 MAC address is not stored in the CAM table then it is added, and then a search is done for finding 
 out on which interface the packet should be forwarded using as a key the destination MAC address. If there is no matching for the destination address, the packet is forwarded on all the switch's ports except the incoming one.
@@ -168,7 +168,7 @@ or destination address(DNAT). When using Basic NAT there is a one-to-one relatio
 being translated and the translated one so that basic NAT can be seen as a solution for internet access 
 for private networks and not as a solution for address exhaustion.
 \item \textbf{PAT} refers to both IP address and port translation, when referring to NAT one usually implies 
-PAT.The relation between addresses being translated and the translation addresses is many-to-many or even many-to-one.
+PAT. The relation between addresses being translated and the translation addresses is many-to-many or even many-to-one.
 
 An example of PAT is presented in \figref{img:nat}.
 \fig[scale=0.4]{src/img/nat.pdf}{img:nat}{PAT}
@@ -195,8 +195,8 @@ The hypervisor is a non-LKL application used to control a topology. It is also u
 about other devices (e.g. the port on which a hub-given by its name- runs) or to send commands to the devices. 
 The hypervisor can be run using the CLI or the GUI.
 
-A image showing how the hypervisor works is \figref{img:hypervisor}. 
-\fig[scale=0.5]{src/img/hypervisor}{img:hypervisor}{LKL-net Hypervisor}
+How the hypervisor works is shown in \figref{img:hypervisor}. 
+\fig[scale=0.5]{src/img/hypervisor}{img:hypervisor}{LKL-net hypervisor}
 
 \section{Devices and features}
 \begin{center}
